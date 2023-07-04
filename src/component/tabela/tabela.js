@@ -1,9 +1,9 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect, createRef} from 'react'
 import Adicionar from './modal/Adicionar'
 import Editar from './modal-2/editar'
 import './styles.css'
 import  Axios  from 'axios'
-
+import Apagador from "./modal-3/apagador"
 
 const Tabela = () => {
     const [pessoa,setPessoa]=useState([])
@@ -21,10 +21,51 @@ const Tabela = () => {
         setNovoEstado(dado_boolean)
     }
 
+
+    //const [escopoPessoa,setEscopoPessoa]=useState({})
+const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
+    console.log(pessoaSeleccionada,'testando edit env')
+      function handleClickAlterar(pessoa){
+        console.log(pessoa, 've se recebe alguma coisa edi')
+        setNovoEstado(!novoEstado)
+        setPessoaSeleccionada(pessoa)
+        //const novaPessoa=pessoa.find((valor)=>valor.id===id)
+       /**
+        *  setNumeroAgora(prevValue=>
+                    [...prevValue,i]
+                    
+                )
+        */
+      }
+
+      const [erase,setErase]=useState(false)
+      const [id,setId]=useState()
+
+     const apagartudo = (i)=>{
+        console.log(i,'id para apagar...')
+        
+        setErase(!erase)
+        setId(i)
+        return(
+        <>
+            
+        </>
+        )
+     }
+
+      /**
+       * 
+    const [numeroReferencia,setNumeroReferencia]=useState([])
     useEffect(()=>{
-        gaigai()
-       },[])
-       
+        const contador = Array(pessoa?.length).fill().map((_,i)=>numeroReferencia[i] ||createRef())
+        setNumeroReferencia(contador)
+    },[pessoa])
+
+    console.log({numeroReferencia})
+       */
+
+
+    
    
      const gaigai = async ()=>{
     try {
@@ -33,7 +74,7 @@ const Tabela = () => {
         ])
         response.forEach ((response)=>{
             if (Array?.isArray(response.data)){
-                setPessoa(pessoa=>[...pessoa,
+                setPessoa(prevvalue=>[...prevvalue,
                 ...response.data])
             }
         })
@@ -42,7 +83,13 @@ const Tabela = () => {
     }
    }
 
+   useEffect(()=>{
+    gaigai()
+   },[])
+   
+
    function fechar_modal_editar(){
+    //e.eventDefault()
     setNovoEstado(false)
    }
     
@@ -90,10 +137,10 @@ const Tabela = () => {
                     <td className= 'observacao'> {dado.produto_observacao} </td>
                     <td className='butoes'>
                         
-                        <button className='butoes-act' onClick={()=>setNovoEstado(!novoEstado)}>Alterar</button>
+                        <button className='butoes-act' key={i} onClick={() =>handleClickAlterar(dado)}>Alterar</button>
                     </td>
                     <td>
-                        <button className='butoes-remov' >Eliminar</button>
+                        <button className='butoes-remov' key={i} onClick={()=>apagartudo(dado)} >Eliminar</button>
                     </td>
                    </tr>
                 ))}
@@ -116,7 +163,14 @@ const Tabela = () => {
                             setPessoa={setPessoa}
                             //setNovoEstado={setNovoEstado}
                             fechar_modal_editar={fechar_modal_editar}
+                           // numeroReferencia={numeroReferencia}
+                            //i={numeroAgora}
+
+                            pessoaSeleccionada={pessoaSeleccionada}
             />}
+        </div>
+        <div>
+        {erase && <Apagador setErase={setErase} id={id} />}
         </div>
         </div>
     </div>
