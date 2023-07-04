@@ -53,7 +53,7 @@ app.post ("/EnviarDadoNovosArmazem", (req, res)=>{
  app.get("/tudo", (req,res)=>{
     let SQL=
 
-   "select armazem.armazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.produto_observacao from armazem inner join produto where armazem.idarmazem = produto.armazem_idarmazem;"
+   "select armazem.idarmazem,armazem.armazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.produto_observacao from armazem inner join produto where armazem.idarmazem = produto.armazem_idarmazem;"
     db.query( SQL, (err,result)=>{
        if (err) console.log(err);
        else res.status(200).json(result);
@@ -101,3 +101,61 @@ app.post ("/signup", (req, res)=>{
     });
 }); 
 
+
+app.delete("/delete_armazem/:id",(req,res) => {
+    const {id}=req.params;
+    let SQL = "DELETE FROM armazem WHERE idarmazem=?";
+    db.query(SQL,[id],(err,result)=>{
+        if(err) console.log(err)
+        else res.send(result)
+    })
+})
+
+app.delete("/delete_produto/:id",(req,res)=>{
+    const {id}=req.params;
+    //PRECISA ELELIMINAR A RESTRICAO; ALLTER TABLE produto RESTRICT;
+    let SQL = "DELETE FROM produto WHERE armazem_idarmazem=?";
+    db.query(SQL,[id],(err,result)=>{
+        if(err) console.log(err)
+        else res.send(result)
+    })
+})
+
+//app.delete ("/teste1_deletar/:id",(res,req)=>{
+  //  const {id}=req.params;
+   // let SQL = "delete produto,armazem from armazem join produto on armazem.idarmazem = produto.armazem_idarmazem where idarmazem = 5"
+//})
+
+
+
+app.put ("/Actualizar_dados_Produto",(req,res)=>{
+
+    const {armazem_idarmazem}=req.body;
+    const produto_nome=req.body.produto_nome;
+    const produto_formato =req.body.produto_formato;
+    const data_emissao=req.body.data_emissao;
+    const duracao=req.body.duracao;
+    const produto_observacao=req.body.produto_observacao;
+    const tempo=req.body.tempo;
+    
+   
+    let SQL = "UPDATE produto Set armazem_idarmazem=?,produto_nome=?,produto_formato=?,tempo=?,data_emissao=?,produto_observacao=? where armazem_idarmazem=?";
+    db.query(SQL,[armazem_idarmazem,produto_nome,produto_formato,tempo,data_emissao,produto_observacao,armazem_idarmazem],(err,result)=>{
+        if(err) console.log(err)
+        else res.send(result)
+    })
+})
+
+app.put ("/Actualizar_dados_Armazem",(req,res)=>{
+
+    const idarmazem=req.body.idarmazem;
+    const {sala}= req.body;
+    const {gaveta}=req.body;
+    const pratileira=req.body.pratileira;
+    const corredor=req.body.corredor;
+    let SQL = "UPDATE armazem Set sala=?,gaveta=?,pratileira=?,corredor=?  where idarmazem=? ";
+    db.query(SQL,[sala,gaveta,pratileira,corredor, idarmazem], (err,result)=>{
+        if(err) console.log(err)
+        else res.send(result)
+    } )
+})
