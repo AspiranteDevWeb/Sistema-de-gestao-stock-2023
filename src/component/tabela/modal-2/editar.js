@@ -1,12 +1,16 @@
 import React , {useState}from 'react'
-
+import Axios  from 'axios'
 import '../modal/styleAdd.css'
 
-function Editar({ enviar_informacao_actualizada_editar,pessoa,setPessoa,setNovoEstado,fechar_modal_editar}) {
+
+function Editar({ pessoaSeleccionada,enviar_informacao_actualizada_editar,pessoa,setPessoa,setNovoEstado,fechar_modal_editar,numeroReferencia}) {
 console.log(pessoa,'pessoa testando agora novo editar')
     const [formato,setFormato]=useState()
-    let [va, setVa]=useState()
+
+    const [va, setVa]=useState()
 console.log(va,'alterar variavel receber')
+
+
     const Presente = (value)=>{
         setVa(prevValue=>({
             ...prevValue,
@@ -14,11 +18,42 @@ console.log(va,'alterar variavel receber')
         }))
     }
 
-    const actualiza_informacao_tabela = ()=>{
+    
+   /**
+    *  const actualiza_informacao_tabela = ()=>{
         const informacao_boleana2 = "false";
         //setNovoEstado="false"
         enviar_informacao_actualizada_editar(informacao_boleana2)
         console.log("testando....")
+    }
+    */console.log(pessoaSeleccionada, 'id do armazem para alterar')
+
+    const handleUpdateValue = () =>{
+       
+        Axios.put("http://localhost:3020/Actualizar_dados_Produto",{
+            armazem_idarmazem:pessoaSeleccionada.idarmazem,
+            produto_nome:va.titulo,
+            produto_formato:formato,
+            data_emissao:'',
+            tempo:va.tempo,
+            duracao:va.duracao,
+            produto_observacao:va.observacao,
+        }).then((response)=>{
+            console.log(response,'hum..hum..hum...ja avisei')
+        })
+
+        Axios.put("http://localhost:3020/Actualizar_dados_Armazem",{
+            idarmazem:pessoaSeleccionada.idarmazem,
+            sala:va.sala,
+            gaveta:va.gaveta,
+            pratileira:va.pratileira,
+            corredor:va.corredor,
+        }).then ((response)=>{
+            console.log(response,'cuidados...ja comecou actualizacao')
+            
+        })
+
+        fechar_modal_editar()
     }
   return (
     <div className='modal-container'>
@@ -31,13 +66,14 @@ console.log(va,'alterar variavel receber')
                         x
                     </button>
                 </div>
-                <form>
+                <div>
                         
                        <label>Numero</label>
                        <input 
                             type='text'
-                            placeholder='Alterar numero'
+                            //placeholder='Alterar numero'
                             name='numero'
+                            defaultValue={pessoaSeleccionada.armazem_idarmazem}
                             onChange={Presente}
                         ></input>
 
@@ -46,7 +82,7 @@ console.log(va,'alterar variavel receber')
                             type='text'
                            //placeholder="Alterar o nome"
                             name='titulo'
-                            defaultValue={pessoa[0].produto_nome}
+                            defaultValue={pessoaSeleccionada.produto_nome}
                             onChange={Presente}></input>
 
                        <label>Data Emisao</label>
@@ -54,6 +90,7 @@ console.log(va,'alterar variavel receber')
                             type='date'
                             placeholder='Alterar data da Emissao'
                             name='data_de_emissao'
+                            defaultValue={pessoaSeleccionada.data_emissao}
                             onChange={Presente}
                         ></input>
 
@@ -62,6 +99,7 @@ console.log(va,'alterar variavel receber')
                             type='time'
                             placeholder='Alterar o tempo'
                             name='duracao'
+                            defaultValue={pessoaSeleccionada.tempo}
                             onChange={Presente}
                        ></input>
 
@@ -79,6 +117,7 @@ console.log(va,'alterar variavel receber')
                             type='text'
                             name='sala'
                             placeholder='Alterar a sala'
+                            defaultValue={pessoaSeleccionada.sala}
                             onChange={Presente}
                        ></input>
 
@@ -87,6 +126,7 @@ console.log(va,'alterar variavel receber')
                             type='text'
                             name='gaveta'
                             placeholder='Alterar a gavete'
+                            defaultValue={pessoaSeleccionada.gaveta}
                             onChange={Presente}
                        ></input>
 
@@ -95,6 +135,7 @@ console.log(va,'alterar variavel receber')
                             type='text'
                             name='pratileira'
                             placeholder='Alterar a pratileira'
+                            defaultValue={pessoaSeleccionada.pratileira}
                             onChange={Presente}
                        ></input>
 
@@ -102,7 +143,8 @@ console.log(va,'alterar variavel receber')
                        <input
                              type='text'
                              name='corredor' 
-                             placeholder='digite o corredor' 
+                             placeholder='digite o corredor'
+                             defaultValue={pessoaSeleccionada.corredor} 
                              onChange={Presente}
                        ></input>
 
@@ -111,13 +153,14 @@ console.log(va,'alterar variavel receber')
                             type='text' 
                             name='observacao' 
                             placeholder='digite a sua observacao' 
+                            defaultValue={pessoaSeleccionada.produto_observacao}
                             onChange={Presente}
                         ></input>
 
-                       <button className='concluir-form' type='button'>Concluir</button>
+                       <button className='concluir-form' onClick={handleUpdateValue}>Concluir</button>
                        
                    
-                </form>
+                </div>
             </div>
     </div>
   )
