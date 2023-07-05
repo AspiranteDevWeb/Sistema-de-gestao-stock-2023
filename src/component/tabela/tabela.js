@@ -26,6 +26,7 @@ const Tabela = () => {
 const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
     console.log(pessoaSeleccionada,'testando edit env')
       function handleClickAlterar(pessoa){
+        //event.preventDefault()
         console.log(pessoa, 've se recebe alguma coisa edi')
         setNovoEstado(!novoEstado)
         setPessoaSeleccionada(pessoa)
@@ -42,6 +43,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
       const [id,setId]=useState()
 
      const apagartudo = (i)=>{
+        //event.preventDefault()
         console.log(i,'id para apagar...')
         
         setErase(!erase)
@@ -68,6 +70,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
     
    
      const gaigai = async ()=>{
+        //event.preventDefault()
     try {
         const response = await Promise.all([
             Axios.get("http://localhost:3020/tudo")

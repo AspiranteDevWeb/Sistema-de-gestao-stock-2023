@@ -22,6 +22,7 @@ function Rotas() {
           <Route exact path="/Home" element={<Home/>}/>
           <Route exact path="/Signin" element={<Signin/>}/>
           <Route exact path="/Signup" element={<Signup/>}/>
+          <Route path ="*" element={<Signin/>}/>
         </Routes>
       </BrowserRouter>
      

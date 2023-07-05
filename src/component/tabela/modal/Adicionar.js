@@ -35,7 +35,7 @@ console.log(adiciona,'quero agora')
     }
 
     const handleClickButton = ()=>{
-        
+        //event.preventDefault()
         Axios.post ("http://localhost:3020/EnviarDadoNovosArmazem",{
             idarmazem:adiciona.numero,
             sala:adiciona.sala,
@@ -162,3 +162,4 @@ console.log(adiciona,'quero agora')
 }
 
 export default Adicionar
+
