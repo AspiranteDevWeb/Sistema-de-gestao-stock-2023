@@ -36,7 +36,7 @@ console.log(adiciona,'quero agora')
 
     const handleClickButton = ()=>{
         //event.preventDefault()
-        Axios.post ("http://localhost:3020/EnviarDadoNovosArmazem",{
+        Axios.post ("http://localhost:3050/EnviarDadoNovosArmazem",{
             idarmazem:adiciona.numero,
             sala:adiciona.sala,
             gaveta:adiciona.gaveta,
@@ -48,7 +48,7 @@ console.log(adiciona,'quero agora')
             console.log(response,'dados frescos')
         })
 
-        Axios.post ("http://localhost:3020/EnviarDadoNovosProduto",{
+        Axios.post ("http://localhost:3050/EnviarDadoNovosProduto",{
             armazem_idarmazem:adiciona.numero,
             produto_nome:adiciona.Titulo,
             produto_formato:valor,

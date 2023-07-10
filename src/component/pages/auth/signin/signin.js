@@ -8,6 +8,7 @@ import Button from '../components/button/index';
 //import Input from '../components/input';
 import Input from '../components/input/input';
 
+import './signin.css'
 function Signin(){
     const {signin} = useAuth();
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function Signin(){
   const [user, setUser]= useState();
 
   useEffect(()=>{
-    axios.get("http://localhost:3020/recebe_signup").then((response)=>{
+    axios.get("http://localhost:3050/recebe_signup").then((response)=>{
       
     setUser(response.data)
     
@@ -90,6 +91,8 @@ function Signin(){
          ]
        }
        />
+
+       <input className='teste_input' placeholder='afsdfdgadfg'></input>
 
 
        

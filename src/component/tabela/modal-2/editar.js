@@ -30,7 +30,7 @@ console.log(va,'alterar variavel receber')
 
     const handleUpdateValue = () =>{
        
-        Axios.put("http://localhost:3020/Actualizar_dados_Produto",{
+        Axios.put("http://localhost:3050/Actualizar_dados_Produto",{
             armazem_idarmazem:pessoaSeleccionada.idarmazem,
             produto_nome:va.titulo,
             produto_formato:formato,
@@ -42,7 +42,7 @@ console.log(va,'alterar variavel receber')
             console.log(response,'hum..hum..hum...ja avisei')
         })
 
-        Axios.put("http://localhost:3020/Actualizar_dados_Armazem",{
+        Axios.put("http://localhost:3050/Actualizar_dados_Armazem",{
             idarmazem:pessoaSeleccionada.idarmazem,
             sala:va.sala,
             gaveta:va.gaveta,

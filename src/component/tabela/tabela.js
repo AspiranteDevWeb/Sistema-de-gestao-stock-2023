@@ -4,6 +4,7 @@ import Editar from './modal-2/editar'
 import './styles.css'
 import  Axios  from 'axios'
 import Apagador from "./modal-3/apagador"
+//import Search_box from './search/pesquisa'
 
 const Tabela = () => {
     const [pessoa,setPessoa]=useState([])
@@ -21,7 +22,7 @@ const Tabela = () => {
         setNovoEstado(dado_boolean)
     }
 
-
+   
     //const [escopoPessoa,setEscopoPessoa]=useState({})
 const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
     console.log(pessoaSeleccionada,'testando edit env')
@@ -67,13 +68,15 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
        */
 
 
+    const [levar,setLevar]=useState()
+    console.log(levar, 'dados inseridos na searchbox/input')
     
    
      const gaigai = async ()=>{
         //event.preventDefault()
     try {
         const response = await Promise.all([
-            Axios.get("http://localhost:3020/tudo")
+            Axios.get("http://localhost:3050/tudo")
         ])
         response.forEach ((response)=>{
             if (Array?.isArray(response.data)){
@@ -90,18 +93,33 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
     gaigai()
    },[])
    
+   //const [controlarabrirPesquisar,setControlarabrirPesquisar]=useState(false)
+   //const [casseteSelecionado,setCasseteSelecionado]=useState()
+   //const abrirPesquisa = (e)=>{
+    //setLevar(e.target.value)
+    //setControlarabrirPesquisar(true)
+  // }
+   //const fecharPesquisa=(cassete)=>{
+    //setCasseteSelecionado(!controlarabrirPesquisar)
+
+   //}
 
    function fechar_modal_editar(){
     //e.eventDefault()
     setNovoEstado(false)
    }
-    
+
   return (
     <div className='geral'>
         <div className='principal'>
         <div className='tema'>
             <h1>Gestão de Cassete</h1>
-            <div className='pesquisa'><input placeholder='pesquisar...'></input></div>
+            <div className='pesquisa'>
+                <input placeholder='pesquisar...'
+               // onChange={()=>abrirPesquisa(e)}
+                onChange={(e)=>setLevar(e.target.value)}
+                ></input>
+            </div>
             <button className='butoes-add' onClick={()=>setEstado(!estado)}>Adicionar</button>
         </div>
         <div className='div-tabela'>
@@ -126,7 +144,13 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
                 <tbody>
 
                 {typeof pessoa !=="undefined" &&
-                pessoa.map((dado,i)=>(
+                pessoa.filter(dado=>{
+                    const searchTerm= levar
+                    const osnome=dado.produto_nome
+
+                    return searchTerm === '' ? dado :searchTerm && osnome.includes(searchTerm)
+                })
+                .map((dado,i)=>(
                     <tr key={i}>
                     <td> {i} </td>
                     <td> {dado.produto_nome} </td>
@@ -175,9 +199,18 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
         <div>
         {erase && <Apagador setErase={setErase} id={id} />}
         </div>
+
         </div>
     </div>
   )
 } 
 
 export default Tabela
+
+
+/**
+ * 
+          <div> 
+           // {controlarabrirPesquisar && <Search_box pessoa={pessoa} levar={levar} fecharPesquisa={fecharPesquisa()}/>}
+        </div>
+ */

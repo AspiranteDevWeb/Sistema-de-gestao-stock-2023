@@ -24,14 +24,14 @@ function Signup(){
   const {signup}=useAuth()
 
   useEffect(()=>{
-    Axios.get("http://localhost:3020/recebe_signup").then((response)=>{
+    Axios.get("http://localhost:3050/recebe_signup").then((response)=>{
       setEmail(response.data.email)
      
     })
     
   },[])
   useEffect(()=>{
-    Axios.get("http://localhost:3020/recebe_signup").then((response)=>{
+    Axios.get("http://localhost:3050/recebe_signup").then((response)=>{
       
       setSenha1(response.data.senha1)
     
@@ -40,7 +40,7 @@ function Signup(){
   },[])
   
   useEffect(()=>{
-    Axios.get("http://localhost:3020/recebe_signup").then((response)=>{
+    Axios.get("http://localhost:3050/recebe_signup").then((response)=>{
      
       setSenha2(response.data.senha2)
     })
@@ -58,7 +58,7 @@ function Signup(){
       return;
     }
 
-    Axios.post("http://localhost:3020/signup",{
+    Axios.post("http://localhost:3050/signup",{
      
       email: email,
       senha1: senha1,
