@@ -1,0 +1,62 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.card_pai_apagar_fora{
+    background-color: rgba(67, 63, 63, 0.538);
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0%;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+}
+.card_pai_apagar_confirar{
+   
+    bottom: auto;
+    border-radius: 5px;
+    background: whitesmoke;
+    border: none;
+    margin:auto;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 23rem;
+}
+
+.button_sair_confirmar{
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    padding: 2px 8px 2px 8px;
+     margin-bottom: 3rem;
+    margin-left: 21rem;
+
+}
+
+.strong_ponto_interrogacao{
+    color: red;
+}
+
+
+.button_apagar_confirmar{
+    background-color: rgb(206, 214, 136);
+    cursor: pointer;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    padding: 1.5%;
+}
+.button_apagar_confirmar:hover{
+    background-color: green;
+    transition: all;
+}
+
+
+
