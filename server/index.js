@@ -13,7 +13,7 @@ const db= mysql.createPool({
 app.use(cors ());
 app.use(express.json());
 
-app.listen(port=3020,()=>{
+app.listen(port=3050,()=>{
     console.log("Servidor do formulario em funcionamento na porta" ,`${port}`)
 })
 
@@ -158,4 +158,20 @@ app.put ("/Actualizar_dados_Armazem",(req,res)=>{
         if(err) console.log(err)
         else res.send(result)
     } )
+})
+
+
+app.post ("/dados_usuario_online",(req,res)=>{
+
+    const {nome} =req.body;
+    const {email} =req.body;
+    const data_inicio=req.body.data_inicio;
+    const hora_inicio=req.body.hora_inicio;
+    
+
+    let SQL = "INSERT INTO usuario_online (nome, email,data_inicio,hora_inicio) values (?,?,?,?)";
+    db.query( SQL, [ nome, email, data_inicio, hora_inicio], (err, result) =>{
+        console.log(err);
+        console.log('insercao de dados usuario logado',result);
+    })
 })
