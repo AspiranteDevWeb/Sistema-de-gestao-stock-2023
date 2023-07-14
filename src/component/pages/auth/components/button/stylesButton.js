@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const Button = styled.button`
     outline:none;
     padding:16px 20px;
-    width: 100%;
+    width: 70%;
     border:none;
     border-radius: 5px;
     font-size: 16px;

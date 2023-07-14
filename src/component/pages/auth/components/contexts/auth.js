@@ -5,9 +5,9 @@ export const AuthContext = createContext({})
 
 export const AuthProvider = ({children})=>{
     const [user,setUser]= useState();
-    const [email,setEmail]= useState();
-    const [password,setPassword]= useState();
-    const [senha,setSenha]=useState();
+    //const [email,setEmail]= useState();
+    //const [password,setPassword]= useState([]);
+    //const [senha,setSenha]=useState();
     const [online_usuario,setOnline_usuario]=useState();
     
     const data=new Date()
@@ -20,16 +20,29 @@ export const AuthProvider = ({children})=>{
     const minutos= String (data.getMinutes()).padStart(2,'0')
     const segundos=String (data.getSeconds()).padStart(2,'0')
 
-    const data_actual= `${dia}/ ${mes}/${ano}`
-    const hora_inicio=`${hora} : ${minutos} : ${segundos}`
+    const [data_actual,setData_actual]=useState()
+    const [hora_inicio,setHora_inicio]=useState()
+ 
+   const x = `${dia}/ ${mes}/${ano}`
 
-
+   const data_time =()=>{
+    setData_actual (dia ,"/",mes ,"/",ano);
+    setHora_inicio(hora,":", minutos,":",segundos)
+    //setData_actual (`${dia} : ${mes} : ${ano}`);
+     //setHora_inicio(`${hora} : ${minutos} : ${segundos}`)
+   }
+   useEffect(()=>{
+    data_time()
+   },[])
+   console.log(data_time,'KKKKKKKas')
+   
+   const y = `${hora} : ${minutos} : ${segundos}`
     console.log(hora,":", minutos,":",segundos)
     console.log(hora_inicio)
 
     console.log(data_actual)
     console.log(dia ,"/",mes ,"/",ano)
-
+    console.log(online_usuario,'o usario online')
 
     console.log(user,'a carregar a senha1')
     useEffect(()=>{
@@ -40,9 +53,9 @@ export const AuthProvider = ({children})=>{
 
     const handleUsuarioOnline=() =>{
         axios.post ("http://localhost:3050/dados_usuario_online",{
-            nome:online_usuario.nome,
+            nome:'',
             email:online_usuario.email,
-            data_inicio:online_usuario.data_inicio,
+            data_inicio:online_usuario.data_actual,
             hora_inicio:online_usuario.hora_inicio,
         }). then((response)=>{
             console.log(response, 'dados do usuario que esta logado no sistema')
@@ -57,7 +70,7 @@ export const AuthProvider = ({children})=>{
         setUsersStorage(user)
         //const usersStorage = JSON.parse(localStorage.getItem("users_db"))
 
-        const hasUser = usersStorage?.filter((user)=> user.senha1 === senha1)
+        const hasUser = usersStorage?.filter((user)=> user.senha1 === senha1 && user.email===email)
 
         if (hasUser?.length){
             return "Ja tem uma conta com essa senha"
@@ -66,13 +79,15 @@ export const AuthProvider = ({children})=>{
     }
 
 
-    const signin = (email, senha, data_actual, hora_inicio)=>{
-
+    const signin = (email, senha)=>{
+console.log(email,"lllll")
+console.log(senha,"22222")
         const hasUser = user?.filter((user) => user.senha1 === senha)
         console.log(hasUser,"senha do usuario logado")
         if (hasUser?.length){
             if ( hasUser[0].senha1 === senha  && hasUser[0].email === email) {
-                setOnline_usuario({email,senha, data_actual, hora_inicio});
+                const token= Math.random().toString(36).substring(2);
+                setOnline_usuario({email:email, data_actual:data_actual, hora_inicio:hora_inicio, token:token});
                 handleUsuarioOnline()
                 return;
             }else {
@@ -85,12 +100,13 @@ export const AuthProvider = ({children})=>{
 
 
     const signout = ()=>{
-        setUser(null)
+        //setUser(null)
+        setOnline_usuario(null)
     }
 
     return (
         <AuthContext.Provider
-            value={{user: !!user, signed: !!user, signin,signup,signout}}
+            value={{user: !!user, signed: !!online_usuario, signin,signup,signout}}
         >
             {children}
         </AuthContext.Provider>

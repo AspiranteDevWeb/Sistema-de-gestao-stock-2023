@@ -4,6 +4,7 @@ import Editar from './modal-2/editar'
 import './styles.css'
 import  Axios  from 'axios'
 import Apagador from "./modal-3/apagador"
+import Navibar_Geral from '../pages/auth/components/cabecalho/navBar_Geral'
 //import Search_box from './search/pesquisa'
 
 const Tabela = () => {
@@ -110,7 +111,10 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
    }
 
   return (
-    <div className='geral'>
+    <div className='fundo_pagina_tabela'>
+    <Navibar_Geral/>
+    <br/><br/><br/>
+        <div className='geral'>
         <div className='principal'>
         <div className='tema'>
             <h1>Gestão de Cassete</h1>
@@ -201,6 +205,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
         </div>
 
         </div>
+    </div>
     </div>
   )
 } 

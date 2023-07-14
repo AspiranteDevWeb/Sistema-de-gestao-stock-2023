@@ -53,6 +53,10 @@ table ::-webkit-scrollbar-thumb{
     word-break: break-all;
 }
 
+.fundo_pagina_tabela{
+    background-color: rgba(253, 248, 248, 0.431);
+}
+
 .geral{
     display: flex;
     align-items: center;

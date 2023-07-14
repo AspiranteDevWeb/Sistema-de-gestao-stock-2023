@@ -57,7 +57,7 @@ function Signup(){
       setError("Os e-mails nao sao iguais");
       return;
     }
-
+//esse axios nao devia estar aqui
     Axios.post("http://localhost:3050/signup",{
      
       email: email,
@@ -69,7 +69,12 @@ function Signup(){
     }); 
     
 
-   
+   const res = signup(email,senha1)
+
+   if(res){
+    setError(res)
+    return;
+   }
 
     alert("usario cadastrado com sucesso!!! Parabens");
     navigate("/home")
@@ -81,9 +86,10 @@ function Signup(){
     return (
      <>
      
-      <div>
-        <label>Sistema de login</label>
-        <div>
+      <div className='div_geral_signin'>
+       
+        <div className='div_secundaria_signin'>
+        <h1><label>Sistema de login</label></h1>
           <Input
             type="email"
             placeholder="DIgite o seu E-mail"
@@ -104,13 +110,14 @@ function Signup(){
             value={senha2}
             onChange={(e)=> [setSenha2(e.target.value), setError("")]}
           />
+          <br/>
 
           <labelError>{error}</labelError>
 
           <Button 
             Text="Increver-se"
             onClick={handleSignup}
-          />
+          /><br/>
 
           <labelSignin>
             ja tem uma conta?

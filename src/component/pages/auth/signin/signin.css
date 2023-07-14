@@ -1,5 +1,5 @@
 *{
-    margin: 0px;
+    margin: 0%;
     padding: 0%;
 }
 
@@ -10,4 +10,35 @@
     height: 40px;
     border-radius: 5px;
     border: none;
+}
+
+.div_geral_signin{
+    width: 100 vw;
+    height: 100vh;
+    top: 0%;
+    margin-top: 0rem;
+    background-color: rgba(70, 68, 68, 0.406);
+    
+
+}
+
+.div_secundaria_signin{
+    
+    
+    margin-left: 30%;
+    margin-right: 30%;
+    background-color: white;
+    border-radius: 5%;
+    align-items: center;
+    justify-content: center;
+    padding-top: 3%;
+    padding-bottom: 4%;
+}
+
+.titulo_login{
+    color: greenyellow;
+    font-size: 2rem;
+}
+.butao_login_entrar{
+    background-color: greenyellow;
 }

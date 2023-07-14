@@ -5,7 +5,7 @@ import Button from "../auth/components/button/index"
 //import useAuth from "../auth/components/hooks/useAuth"
 //import {AuthProvider} from "../auth/components/context/auth"
 import useAuth from '../auth/components/hooks/useAuth';
-
+import Navibar_Geral from '../auth/components/cabecalho/navBar_Geral';
 import { AuthProvider } from '../auth/components/contexts/auth';
 function Home (){
 
@@ -13,6 +13,7 @@ function Home (){
     const navigate = useNavigate()
     return(
         <>
+        <Navibar_Geral/>
         <div>Home</div>
         <div><h1>Tem ALguma ideia?....</h1></div>
         <Button
