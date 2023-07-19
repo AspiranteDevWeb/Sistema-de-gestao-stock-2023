@@ -19,21 +19,21 @@ app.listen(port=3050,()=>{
 
 
 app.post ("/EnviarDadoNovosArmazem", (req, res)=>{
-    const idarmazem= req.body.idarmazem;
+    //const idarmazem= req.body.idarmazem;
     const sala = req.body.sala;
     const gaveta=req.body.gaveta;
     const pratileira=req.body.pratileira;
     const corredor = req.body.corredor;
 
      let SQL=
-     "INSERT INTO armazem (idarmazem,sala,gaveta,pratileira,corredor) VALUES (?,?,?,?,?)" ;
-     db.query( SQL, [idarmazem,sala,gaveta,pratileira,corredor], (err, result) =>{
+     "INSERT INTO armazem (sala,gaveta,pratileira,corredor) VALUES (?,?,?,?)" ;
+     db.query( SQL, [sala,gaveta,pratileira,corredor], (err, result) =>{
         console.log(err);
     });
  }); 
 
  app.post ("/EnviarDadoNovosProduto", (req, res)=>{
-    const {armazem_idarmazem}= req.body;
+   // const {armazem_idarmazem}= req.body;
     const {produto_nome}= req.body;
     const produto_formato =req.body.produto_formato;
     const data_emissao =req.body.data_emissao;
@@ -43,8 +43,8 @@ app.post ("/EnviarDadoNovosArmazem", (req, res)=>{
    
 
      let SQL=
-     "INSERT INTO produto (armazem_idarmazem,produto_nome,produto_formato,tempo,data_emissao,produto_observacao) VALUES (?,?,?,?,?,?)" ;
-     db.query( SQL, [armazem_idarmazem,produto_nome,produto_formato,tempo,data_emissao,produto_observacao], (err, result) =>{
+     "INSERT INTO produto (produto_nome,produto_formato,tempo,data_emissao,produto_observacao) VALUES (?,?,?,?,?)" ;
+     db.query( SQL, [produto_nome,produto_formato,tempo,data_emissao,produto_observacao], (err, result) =>{
         console.log(err);
     });
  });
@@ -53,7 +53,7 @@ app.post ("/EnviarDadoNovosArmazem", (req, res)=>{
  app.get("/tudo", (req,res)=>{
     let SQL=
 
-   "select armazem.idarmazem,armazem.armazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.produto_observacao from armazem inner join produto where armazem.idarmazem = produto.armazem_idarmazem;"
+   "select armazem.idarmazem,armazem.armazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.data_emissao,produto.produto_observacao from armazem inner join produto where armazem.idarmazem = produto.armazem_idarmazem;"
     db.query( SQL, (err,result)=>{
        if (err) console.log(err);
        else res.status(200).json(result);
@@ -139,8 +139,8 @@ app.put ("/Actualizar_dados_Produto",(req,res)=>{
     const tempo=req.body.tempo;
     
    
-    let SQL = "UPDATE produto Set armazem_idarmazem=?,produto_nome=?,produto_formato=?,tempo=?,data_emissao=?,produto_observacao=? where armazem_idarmazem=?";
-    db.query(SQL,[armazem_idarmazem,produto_nome,produto_formato,tempo,data_emissao,produto_observacao,armazem_idarmazem],(err,result)=>{
+    let SQL = "UPDATE produto Set produto_nome=?,produto_formato=?,tempo=?,data_emissao=?,produto_observacao=? where armazem_idarmazem=?";
+    db.query(SQL,[produto_nome,produto_formato,tempo,data_emissao,produto_observacao,armazem_idarmazem],(err,result)=>{
         if(err) console.log(err)
         else res.send(result)
     })
@@ -167,7 +167,10 @@ app.post ("/dados_usuario_online",(req,res)=>{
     const {email} =req.body;
     const data_inicio=req.body.data_inicio;
     const hora_inicio=req.body.hora_inicio;
-    
+    /**essa condicionais  */
+    if(!email){
+        return res.status(422).json({msg:'o email do usuario logado nao chegou'})
+    }
 
     let SQL = "INSERT INTO usuario_online (nome, email,data_inicio,hora_inicio) values (?,?,?,?)";
     db.query( SQL, [ nome, email, data_inicio, hora_inicio], (err, result) =>{

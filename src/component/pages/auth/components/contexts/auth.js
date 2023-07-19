@@ -8,7 +8,7 @@ export const AuthProvider = ({children})=>{
     //const [email,setEmail]= useState();
     //const [password,setPassword]= useState([]);
     //const [senha,setSenha]=useState();
-    const [online_usuario,setOnline_usuario]=useState();
+    const [online_usuario,setOnline_usuario]=useState('');
     
     const data=new Date()
     const dia= String(data.getDate()).padStart(2,'0') //o dia conta com dois digito com esse comando,comecando de 01.
@@ -23,6 +23,8 @@ export const AuthProvider = ({children})=>{
     const [data_actual,setData_actual]=useState()
     const [hora_inicio,setHora_inicio]=useState()
  
+        const [estado, setEstado]=useState(0)
+
    const x = `${dia}/ ${mes}/${ano}`
 
    const data_time =()=>{
@@ -51,7 +53,12 @@ export const AuthProvider = ({children})=>{
         })
     },[])
 
-    const handleUsuarioOnline=() =>{
+    const handleUsuarioOnline=(email, token) =>{
+        setOnline_usuario({email:email, data_actual:data_actual, hora_inicio:hora_inicio, token:token});
+        enviarDadosBancoDados()
+    }
+
+    const enviarDadosBancoDados=()=>{
         axios.post ("http://localhost:3050/dados_usuario_online",{
             nome:'',
             email:online_usuario.email,
@@ -87,8 +94,10 @@ console.log(senha,"22222")
         if (hasUser?.length){
             if ( hasUser[0].senha1 === senha  && hasUser[0].email === email) {
                 const token= Math.random().toString(36).substring(2);
-                setOnline_usuario({email:email, data_actual:data_actual, hora_inicio:hora_inicio, token:token});
-                handleUsuarioOnline()
+               // setOnline_usuario({email:email, data_actual:data_actual, hora_inicio:hora_inicio, token:token});
+                handleUsuarioOnline(email, token)
+                setEstado(1)
+                console.log(hasUser[0])
                 return;
             }else {
                 return "Email ou senha incorrecta";
@@ -101,7 +110,8 @@ console.log(senha,"22222")
 
     const signout = ()=>{
         //setUser(null)
-        setOnline_usuario(null)
+        //setOnline_usuario(null)
+        setEstado(null)
     }
 
     return (

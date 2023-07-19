@@ -23,7 +23,9 @@ function Signup(){
   
   const {signup}=useAuth()
 
-  useEffect(()=>{
+ /**
+  * 
+  *   useEffect(()=>{
     Axios.get("http://localhost:3050/recebe_signup").then((response)=>{
       setEmail(response.data.email)
      
@@ -46,6 +48,7 @@ function Signup(){
     })
     
   },[])
+  */
 
 
   const handleSignup = ()=> {

@@ -34,7 +34,7 @@ console.log(va,'alterar variavel receber')
             armazem_idarmazem:pessoaSeleccionada.idarmazem,
             produto_nome:va.titulo,
             produto_formato:formato,
-            data_emissao:'',
+            data_emissao:va.data_emissao,
             tempo:va.tempo,
             duracao:va.duracao,
             produto_observacao:va.observacao,
@@ -53,6 +53,8 @@ console.log(va,'alterar variavel receber')
             
         })
 
+
+
         fechar_modal_editar()
     }
   return (
@@ -68,14 +70,7 @@ console.log(va,'alterar variavel receber')
                 </div>
                 <div>
                         
-                       <label>Numero</label>
-                       <input 
-                            type='text'
-                            //placeholder='Alterar numero'
-                            name='numero'
-                            defaultValue={pessoaSeleccionada.armazem_idarmazem}
-                            onChange={Presente}
-                        ></input>
+                      
 
                        <label>Titulo</label>
                        <input
@@ -168,3 +163,13 @@ console.log(va,'alterar variavel receber')
 
 export default Editar
 
+/**
+ *  <label>Numero</label>
+                       <input 
+                            type='text'
+                            //placeholder='Alterar numero'
+                            name='numero'
+                            defaultValue={pessoaSeleccionada.armazem_idarmazem}
+                            onChange={Presente}
+                        ></input>
+ */

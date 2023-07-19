@@ -23,7 +23,9 @@ const Tabela = () => {
         setNovoEstado(dado_boolean)
     }
 
-   
+   useEffect(()=>{
+    
+   },[pessoa])
     //const [escopoPessoa,setEscopoPessoa]=useState({})
 const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
     console.log(pessoaSeleccionada,'testando edit env')
@@ -81,8 +83,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
         ])
         response.forEach ((response)=>{
             if (Array?.isArray(response.data)){
-                setPessoa(prevvalue=>[...prevvalue,
-                ...response.data])
+                setPessoa(response.data)
             }
         })
     } catch (error){

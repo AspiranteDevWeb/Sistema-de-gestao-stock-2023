@@ -64,7 +64,7 @@ console.log(senha,"senha do usuario para login")
       return;
     }
     alert("usario confirmado com sucesso!!! ");
-    navigate("/Home")
+    navigate("/")
   }
 
   return (

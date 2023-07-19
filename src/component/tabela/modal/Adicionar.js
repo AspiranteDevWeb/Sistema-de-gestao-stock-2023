@@ -37,7 +37,7 @@ console.log(adiciona,'quero agora')
     const handleClickButton = ()=>{
         //event.preventDefault()
         Axios.post ("http://localhost:3050/EnviarDadoNovosArmazem",{
-            idarmazem:adiciona.numero,
+            //idarmazem:adiciona.numero,
             sala:adiciona.sala,
             gaveta:adiciona.gaveta,
             pratileira:adiciona.pratileira,
@@ -49,10 +49,10 @@ console.log(adiciona,'quero agora')
         })
 
         Axios.post ("http://localhost:3050/EnviarDadoNovosProduto",{
-            armazem_idarmazem:adiciona.numero,
+           // armazem_idarmazem:adiciona.numero,
             produto_nome:adiciona.Titulo,
             produto_formato:valor,
-            data_emissao:'',
+            data_emissao:adiciona.data_de_emissao,
             duracao:adiciona.duracao,
             produto_observacao:adiciona.observacao,
 
@@ -63,18 +63,12 @@ console.log(adiciona,'quero agora')
     }//adiciona.data_de_emissao
 
   return (
-    <div className='CU'>
+    <div className='CD'>
         <div className='modal-container'>
            <div className='modal'>
                 <form>
                         <button className='red' onClick={informar_Tabela()}>x</button>
-                       <label>Numero</label>
-                       <input
-                             type='text' 
-                             placeholder='Digite o Numero' 
-                             name='numero' 
-                             onChange={e=>handlechangevalue({numero: e.target.value})}
-                        />
+                       
 
                        <label>Titulo</label>
                        <input
@@ -163,3 +157,12 @@ console.log(adiciona,'quero agora')
 
 export default Adicionar
 
+/**
+ * <label>Numero</label>
+                       <input
+                             type='text' 
+                             placeholder='Digite o Numero' 
+                             name='numero' 
+                             onChange={e=>handlechangevalue({numero: e.target.value})}
+                        />
+ */
