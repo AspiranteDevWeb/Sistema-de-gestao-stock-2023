@@ -3,7 +3,7 @@ import  Axios  from 'axios'
 import './styleAdd.css'
 
 
-function Adicionar({enviar_Informacao_Adicionar}) {
+function Adicionar({enviar_Informacao_Adicionar,setEstado}) {
 
     const [valor,setValor]=useState()
 
@@ -34,8 +34,8 @@ console.log(adiciona,'quero agora')
         }))
     }
 
-    const handleClickButton = ()=>{
-        //event.preventDefault()
+    const handleClickButton = (e)=>{
+        
         Axios.post ("http://localhost:3050/EnviarDadoNovosArmazem",{
             //idarmazem:adiciona.numero,
             sala:adiciona.sala,
@@ -59,14 +59,15 @@ console.log(adiciona,'quero agora')
         }).then((response)=>{
             console.log(response,'dados frescos')
         })
-        
+        setEstado(false)
+        //e.preventDefault()
     }//adiciona.data_de_emissao
 
   return (
     <div className='CD'>
         <div className='modal-container'>
            <div className='modal'>
-                <form>
+                <div className="form">
                         <button className='red' onClick={informar_Tabela()}>x</button>
                        
 
@@ -76,6 +77,7 @@ console.log(adiciona,'quero agora')
                              placeholder='Digite o Titulo da cassete' 
                              name='Titulo'
                              onChange={e=>handlechangevalue({Titulo: e.target.value})}
+                             required
                         />
 
                        <label>Data Emisao</label>
@@ -83,7 +85,9 @@ console.log(adiciona,'quero agora')
                              type='date' 
                              placeholder='Digite a Data da Emissao' 
                              name='data_de_emissao' 
-                             onChange={e=>handlechangevalue({data_de_emissao:e.target.value})}/>
+                             onChange={e=>handlechangevalue({data_de_emissao:e.target.value})}
+                             required
+                             />
                        <label>Tempo/ Horas</label>
                        <input
                              type='time' 
@@ -106,6 +110,7 @@ console.log(adiciona,'quero agora')
                              name='sala' 
                              placeholder='digite a sala' 
                              onChange={e=>handlechangevalue({sala:e.target.value})}
+                             required
                         />
 
                        <label>Gaveta</label>
@@ -138,6 +143,7 @@ console.log(adiciona,'quero agora')
                             name='observacao' 
                             placeholder='digite a sua observacao' 
                             onChange={e=>handlechangevalue({observacao:e.target.value})}
+                            required
                         />
 
                        <button
@@ -148,7 +154,7 @@ console.log(adiciona,'quero agora')
                         </button>
                        
                    
-                </form>
+                </div>
            </div>
         </div>
     </div>

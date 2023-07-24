@@ -4,7 +4,7 @@ import '../modal/styleAdd.css'
 
 
 function Editar({ pessoaSeleccionada,enviar_informacao_actualizada_editar,pessoa,setPessoa,setNovoEstado,fechar_modal_editar,numeroReferencia}) {
-console.log(pessoa,'pessoa testando agora novo editar')
+//console.log(pessoa,'pessoa testando agora novo editar')
     const [formato,setFormato]=useState()
 
     const [va, setVa]=useState()
@@ -34,9 +34,9 @@ console.log(va,'alterar variavel receber')
             armazem_idarmazem:pessoaSeleccionada.idarmazem,
             produto_nome:va.titulo,
             produto_formato:formato,
-            data_emissao:va.data_emissao,
-            tempo:va.tempo,
-            duracao:va.duracao,
+            data_emissao:va.data_de_emissao,
+           // tempo:va.tempo,
+            tempo:va.duracao,
             produto_observacao:va.observacao,
         }).then((response)=>{
             console.log(response,'hum..hum..hum...ja avisei')
@@ -99,13 +99,14 @@ console.log(va,'alterar variavel receber')
                        ></input>
 
                        <label>Formato</label>
+                      
                        <select  onChange={(e)=>setFormato(e.target.value)}>
                             <option name="Betacam" value="Betacam">Betacam</option>
                             <option name="Matic" value="Matic">Matic</option>
                             <option name="DVCAM" value="DVCAM">DVCAM</option>
                             <option name="MHS" value="MHS">MHS</option>
                             <option name="Minav" value="Minav">Minav</option>
-                        </select> 
+                        </select>
 
                        <label>Sala</label>
                        <input

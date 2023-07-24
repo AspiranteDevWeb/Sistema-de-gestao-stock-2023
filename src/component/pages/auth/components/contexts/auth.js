@@ -55,13 +55,13 @@ export const AuthProvider = ({children})=>{
 
     const handleUsuarioOnline=(email, token) =>{
         setOnline_usuario({email:email, data_actual:data_actual, hora_inicio:hora_inicio, token:token});
-        enviarDadosBancoDados()
+        enviarDadosBancoDados(email)
     }
 
-    const enviarDadosBancoDados=()=>{
+    const enviarDadosBancoDados=(email)=>{
         axios.post ("http://localhost:3050/dados_usuario_online",{
             nome:'',
-            email:online_usuario.email,
+            email:online_usuario.email?online_usuario.email:email,
             data_inicio:online_usuario.data_actual,
             hora_inicio:online_usuario.hora_inicio,
         }). then((response)=>{

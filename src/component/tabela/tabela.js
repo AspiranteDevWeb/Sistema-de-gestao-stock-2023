@@ -71,7 +71,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
        */
 
 
-    const [levar,setLevar]=useState()
+    const [levar,setLevar]=useState('')
     console.log(levar, 'dados inseridos na searchbox/input')
     
    
@@ -79,7 +79,10 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
         //event.preventDefault()
     try {
         const response = await Promise.all([
-            Axios.get("http://localhost:3050/tudo")
+            Axios.get(`http://localhost:3050/tudo/${levar}`//,{
+                //params:{levar:levar}
+           // }
+            )
         ])
         response.forEach ((response)=>{
             if (Array?.isArray(response.data)){
@@ -93,7 +96,9 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
 
    useEffect(()=>{
     gaigai()
-   },[])
+   },[levar])
+
+   useEffect(()=>{},[levar])
    
    //const [controlarabrirPesquisar,setControlarabrirPesquisar]=useState(false)
    //const [casseteSelecionado,setCasseteSelecionado]=useState()
@@ -148,16 +153,15 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
                 </thead>
                 <tbody>
 
-                {typeof pessoa !=="undefined" &&
-                pessoa.filter(dado=>{
-                    const searchTerm= levar
-                    const osnome=dado.produto_nome
+                { //pessoa?//.filter(dado=>{
+                   // const searchTerm= levar
+                   // const osnome=dado.produto_nome
 
-                    return searchTerm === '' ? dado :searchTerm && osnome.includes(searchTerm)
-                })
-                .map((dado,i)=>(
+                   // return searchTerm === "" ? dado :searchTerm && osnome.includes(searchTerm)
+              //  })
+              pessoa?.map((dado,i)=>(
                     <tr key={i}>
-                    <td> {i} </td>
+                    <td> {i+1} </td>
                     <td> {dado.produto_nome} </td>
                     <td> {dado.data_emissao} </td>
                     <td> {dado.tempo} </td>
@@ -187,12 +191,13 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
         <div>
             {estado && <Adicionar
                 enviar_Informacao_Adicionar={recebe_Informacao_Adicionar}
+                setEstado={setEstado}
              />}
         </div>
         <div>{novoEstado && <Editar 
-                            enviar_informacao_actualizada_editar={recebe_informacao_editar}
-                            pessoa={pessoa}
-                            setPessoa={setPessoa}
+                          //  enviar_informacao_actualizada_editar={recebe_informacao_editar}
+                         //   pessoa={pessoa}
+                         //   setPessoa={setPessoa}
                             //setNovoEstado={setNovoEstado}
                             fechar_modal_editar={fechar_modal_editar}
                            // numeroReferencia={numeroReferencia}
