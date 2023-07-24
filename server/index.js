@@ -50,16 +50,32 @@ app.post ("/EnviarDadoNovosArmazem", (req, res)=>{
  });
  
 
- app.get("/tudo", (req,res)=>{
-    let SQL=
+ app.get("/tudo/:levar", (req,res)=>{
+    const {levar}= req.params;
+    console.log(levar, "show samething")
+    if(levar =="" || levar == undefined){
 
-   "select armazem.idarmazem,armazem.armazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.data_emissao,produto.produto_observacao from armazem inner join produto where armazem.idarmazem = produto.armazem_idarmazem;"
-    db.query( SQL, (err,result)=>{
-       if (err) console.log(err);
-       else res.status(200).json(result);
-    });
+        let SQL=
+
+        "select armazem.idarmazem,armazem.armazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.data_emissao,produto.produto_observacao from armazem inner join produto where armazem.idarmazem = produto.armazem_idarmazem;"
+         db.query( SQL, (err,result)=>{
+            if (err) console.log(err);
+            else res.status(200).json(result);
+         });
+       
+    }
+   else{
+        let SQL =
+
+        "select armazem.idarmazem,armazem.armazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.data_emissao,produto.produto_observacao from armazem join produto on armazem.idarmazem = produto.armazem_idarmazem  WHERE produto.produto_nome like ?;"
+
+        db.query(SQL,[`%${levar}%`]  ,(err,result)=>{
+            if(err)console.log(err)
+            else res.status(200).json(result);
+        })
+    }
 });
-
+//levar,
 
 /////////login e logout/////
 
@@ -134,16 +150,65 @@ app.put ("/Actualizar_dados_Produto",(req,res)=>{
     const produto_nome=req.body.produto_nome;
     const produto_formato =req.body.produto_formato;
     const data_emissao=req.body.data_emissao;
-    const duracao=req.body.duracao;
-    const produto_observacao=req.body.produto_observacao;
+    //const duracao=req.body.duracao;
     const tempo=req.body.tempo;
+    const produto_observacao=req.body.produto_observacao;
     
-   
-    let SQL = "UPDATE produto Set produto_nome=?,produto_formato=?,tempo=?,data_emissao=?,produto_observacao=? where armazem_idarmazem=?";
+   if (produto_nome != null || produto_nome != undefined){
+    let SQL = "UPDATE produto set produto_nome=? where armazem_idarmazem=?";
+    db.query(SQL,[produto_nome,armazem_idarmazem],(err,result)=>{
+        if(err) console.log(err,"atencao...titulo vazio")
+        //else res.send(result)
+        else console.log(result,'atencao...titulo ou produto_nome actualizado')
+    })
+   }
+   if (produto_formato != null || produto_formato != undefined){
+    let SQL= "UPDATE produto set produto_formato=? where armazem_idarmazem=?";
+    db.query(SQL,[produto_formato,armazem_idarmazem],(err,result)=>{
+        if(err) console.log(err,"atencao...produto_formato vazio")
+        //else res.send(result)
+        else console.log(result,'atencao...produto_formato actualizado')
+    })
+   }
+
+   if (data_emissao != null || data_emissao != undefined){
+    let SQL = "UPDATE produto set data_emissao=? where armazem_idarmazem =?";
+    db.query(SQL,[data_emissao,armazem_idarmazem],(err,result)=>{
+        if(err) console.log(err,"atencao...data_emissao vazio")
+        //else res.send(result)
+        else console.log(result,'atencao...data_emissao actualizado')
+    })
+   }
+
+   if (tempo!=null || tempo != undefined){
+    let SQL = "UPDATE produto set tempo=? WHERE armazem_idarmazem=?";
+        db.query(SQL,[tempo,armazem_idarmazem],(err,result)=>{
+            if(err) console.log(err,"atencao...tempo vazio")
+            //else res.send(result)
+            else console.log(result,'tempo atencao...actualizado')
+        })
+    
+   }
+
+   if (produto_observacao != null || produto_observacao != undefined){
+    SQL="UPDATE produto set produto_observacao=? WHERE armazem_idarmazem=?";
+    db.query(SQL,[produto_observacao,armazem_idarmazem],(err,result)=>{
+        if(err) console.log(err,"atencao...produto_observacao vazio")
+        //else res.send(result)
+        else console.log(result,'atencao...produto_observacao actualizado')
+    })
+   }//else
+
+  /**
+   *  if (produto_nome !="" && produto_formato !="" && tempo != "" && data_emissao != "" && produto_observacao !=""){
+    let SQL = "UPDATE produto set produto_nome=?,produto_formato=?,tempo=?,data_emissao=?,produto_observacao=? where armazem_idarmazem=?";
     db.query(SQL,[produto_nome,produto_formato,tempo,data_emissao,produto_observacao,armazem_idarmazem],(err,result)=>{
         if(err) console.log(err)
         else res.send(result)
     })
+   }
+   */
+    
 })
 
 app.put ("/Actualizar_dados_Armazem",(req,res)=>{
@@ -153,11 +218,53 @@ app.put ("/Actualizar_dados_Armazem",(req,res)=>{
     const {gaveta}=req.body;
     const pratileira=req.body.pratileira;
     const corredor=req.body.corredor;
-    let SQL = "UPDATE armazem Set sala=?,gaveta=?,pratileira=?,corredor=?  where idarmazem=? ";
-    db.query(SQL,[sala,gaveta,pratileira,corredor, idarmazem], (err,result)=>{
-        if(err) console.log(err)
-        else res.send(result)
-    } )
+
+    if(sala != null || sala != undefined){
+        let SQL = "UPDATE armazem set sala=? WHERE idarmazem=?";
+        db.query(SQL,[sala,idarmazem],(err,result)=>{
+            if(err) console.log(err,"atencao...sala vazio")
+            //else res.send(result)
+            else console.log(result,'atencao...sala actualizado')
+        })
+    }
+
+    if(gaveta != null || gaveta != undefined){
+        let SQL = "UPDATE armazem set gaveta=? WHERE idarmazem=?";
+        db.query(SQL,[gaveta,idarmazem],(err,result)=>{
+            if(err)console.log(err,"atencao...gaveta vazio")
+           // else res.send(result)
+           else console.log(result,'atencao...gaveta actualizado')
+        })
+    }
+
+    if(pratileira != null || pratileira != undefined){
+        let SQL = "UPDATE armazem set pratileira=? WHERE idarmazem=?";
+        db.query(SQL,[pratileira,idarmazem],(err,result)=>{
+            if (err) console.log(err,"atencao...pratileira vazio")
+           // else res.send(result)
+           else console.log(result,'atencao...pratileira actualizado')
+        })
+    }
+
+    if(corredor != null || corredor != undefined){
+        let SQL =
+        "UPDATE armazem SET corredor=? WHERE idarmazem=?";
+        db.query(SQL,[corredor,idarmazem],(err,result)=>{
+            if(err)console.log(err,"atencao...corredor vazio")
+           // else res.send(result)
+           else console.log(result,'atencao...corredor actualizado')
+        })
+    }//else
+
+   /**
+    *  if(sala != "" && gaveta != "" && pratileira != "" && corredor !=""){
+        let SQL = "UPDATE armazem set sala=?,gaveta=?,pratileira=?,corredor=?  where idarmazem=? ";
+        db.query(SQL,[sala,gaveta,pratileira,corredor, idarmazem], (err,result)=>{
+            if(err) console.log(err)
+            else res.send(result)
+        } )
+    }
+    */
 })
 
 
@@ -174,7 +281,7 @@ app.post ("/dados_usuario_online",(req,res)=>{
 
     let SQL = "INSERT INTO usuario_online (nome, email,data_inicio,hora_inicio) values (?,?,?,?)";
     db.query( SQL, [ nome, email, data_inicio, hora_inicio], (err, result) =>{
-        console.log(err);
-        console.log('insercao de dados usuario logado',result);
+        if (err) console.log(err,'falha....nao conseguio inserir dados pra usuario online....');
+        else console.log(result,'insercao de dados usuario logado');
     })
 })
