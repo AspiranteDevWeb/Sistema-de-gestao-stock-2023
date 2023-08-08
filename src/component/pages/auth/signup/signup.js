@@ -6,6 +6,7 @@ import useAuth from '../components/hooks/useAuth';
 import {AuthProvider} from '../components/contexts/auth'
 import Button from '../components/button/index';
 import Input from '../components/input/input';
+import Tabela_users from '../../../users/Tabela_users'
 
 function Signup(){
   const [email, setEmail]=useState();
@@ -50,6 +51,7 @@ function Signup(){
   },[])
   */
 
+  const [abrir,setAbrir]=useState(false)
 
   const handleSignup = ()=> {
     if(!email | !senha1 | !senha2) {
@@ -92,7 +94,16 @@ function Signup(){
       <div className='div_geral_signin'>
        
         <div className='div_secundaria_signin'>
+          <button onClick={(e)=>setAbrir(!abrir)}>usuarios Registados</button>
         <h1><label>Sistema de login</label></h1>
+
+          <Input
+            type="name"
+            placeholder="DIgite o nome"
+            value={email}
+           // onChange={(e)=> [setEmail(e.target.value), setError("")]}
+          />
+
           <Input
             type="email"
             placeholder="DIgite o seu E-mail"
@@ -115,6 +126,13 @@ function Signup(){
           />
           <br/>
 
+          <label>Tipo de usuario</label>
+          <select onChange={""}>
+            <option name ="Assistente" value = "Assistente">Assistente</option>
+            <option name ="Supervisor" value="Supervisor">Supervisor</option>
+            <option name ="Administrador" value="Administrador">Administrador</option>
+          </select>
+
           <labelError>{error}</labelError>
 
           <Button 
@@ -129,6 +147,10 @@ function Signup(){
             </strong>
           </labelSignin>
 
+        </div>
+
+        <div>
+          {abrir && <Tabela_users setAbrir={setAbrir}/>}
         </div>
       </div>
       

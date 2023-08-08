@@ -17,10 +17,10 @@ function Adicionar({enviar_Informacao_Adicionar,setEstado}) {
     }
 
     */
-   const informar_Tabela=()=>{
-    const informacao = "false";
-    enviar_Informacao_Adicionar(informacao)
-   }
+   //const informar_Tabela=()=>{
+    //const informacao = "false";
+    //enviar_Informacao_Adicionar(informacao)
+   //}
 
 
     const [adiciona,setAdiciona]=useState()
@@ -59,7 +59,8 @@ console.log(adiciona,'quero agora')
         }).then((response)=>{
             console.log(response,'dados frescos')
         })
-        setEstado(false)
+        enviar_Informacao_Adicionar()
+        //setEstado(false)
         //e.preventDefault()
     }//adiciona.data_de_emissao
 
@@ -68,7 +69,7 @@ console.log(adiciona,'quero agora')
         <div className='modal-container'>
            <div className='modal'>
                 <div className="form">
-                        <button className='red' onClick={informar_Tabela()}>x</button>
+                        <button className='red' onClick={enviar_Informacao_Adicionar}>x</button>
                        
 
                        <label>Titulo</label>
@@ -98,9 +99,9 @@ console.log(adiciona,'quero agora')
                        <label>Formato</label>
                        <select  onChange={(e)=>setValor(e.target.value)}>
                             <option name="Betacam" value="Betacam">Betacam</option>
-                            <option name="Matic" value="Matic">Matic</option>
+                            <option name="UMatic" value="Matic">UMatic</option>
                             <option name="DVCAM" value="DVCAM">DVCAM</option>
-                            <option name="MHS" value="MHS">MHS</option>
+                            <option name="VHS" value="MHS">VHS</option>
                             <option name="Minav" value="Minav">Minav</option>
                         </select> 
 

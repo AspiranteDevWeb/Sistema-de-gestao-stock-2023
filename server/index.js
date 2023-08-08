@@ -48,12 +48,22 @@ app.post ("/EnviarDadoNovosArmazem", (req, res)=>{
         console.log(err);
     });
  });
- 
+
+
+ app.get("/tudo/",(req,res)=>{
+    let SQL =
+    "select armazem.idarmazem,armazem.armazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.data_emissao,produto.produto_observacao from armazem inner join produto where armazem.idarmazem = produto.armazem_idarmazem;"
+         db.query( SQL, (err,result)=>{
+            if (err) console.log(err);
+            else res.status(200).json(result);
+         });
+       
+ })
 
  app.get("/tudo/:levar", (req,res)=>{
     const {levar}= req.params;
     console.log(levar, "show samething")
-    if(levar =="" || levar == undefined){
+    if(levar == null || levar == undefined || levar == 1){
 
         let SQL=
 
@@ -90,7 +100,7 @@ app.post ("/Enviar_login", (req, res)=>{
     });
 }); 
 
-
+//recebe_signup corresponde a usuarios
 app.get("/recebe_signup", (req,res)=>{
     let SQL=
     "SELECT * FROM usuario";
@@ -102,8 +112,22 @@ app.get("/recebe_signup", (req,res)=>{
 });
 
 
+//recebe_signup esta a filtrar dados dos usuarios no sistema. Neste caso filtra pelo nome 
+app.get ("/recebe_signup/:buscarNome",(req,res)=>{
+    const {buscarNome}= req.params;
+
+    let SQL=
+        "SELECT * FROM usuario WHERE nome like ?;"
+
+    db.query(SQL,[`%${buscarNome}%`],(err,result)=>{
+        if(err) console.log(err,'falha ao chamar os dados do usuarios');
+        else console.log(result,"Chamou o nome, email,senhas e funcao do usuario");
+    })
+})
 
 
+
+/////
 app.post ("/signup", (req, res)=>{
     
     const {email}= req.body;
@@ -276,7 +300,8 @@ app.post ("/dados_usuario_online",(req,res)=>{
     const hora_inicio=req.body.hora_inicio;
     /**essa condicionais  */
     if(!email){
-        return res.status(422).json({msg:'o email do usuario logado nao chegou'})
+        //return res.status(422).json({msg:'o email do usuario logado nao chegou'})
+        console.log('o email do usuario logado nao chegou')
     }
 
     let SQL = "INSERT INTO usuario_online (nome, email,data_inicio,hora_inicio) values (?,?,?,?)";
@@ -285,3 +310,5 @@ app.post ("/dados_usuario_online",(req,res)=>{
         else console.log(result,'insercao de dados usuario logado');
     })
 })
+
+

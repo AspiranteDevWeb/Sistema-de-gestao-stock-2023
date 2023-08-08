@@ -13,8 +13,8 @@ const Tabela = () => {
 
     const [estado,setEstado]=useState(false)
 
-    const recebe_Informacao_Adicionar = (dados)=>{
-        setEstado(dados)
+    function recebe_Informacao_Adicionar (){
+        setEstado(false)
     }
 
     const [novoEstado,setNovoEstado]=useState(false)
