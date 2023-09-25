@@ -7,6 +7,7 @@ import Apagador from "./modal-3/apagador"
 import Navibar_Geral from '../pages/auth/components/cabecalho/navBar_Geral'
 //import Search_box from './search/pesquisa'
 
+//import '../'
 const Tabela = () => {
     const [pessoa,setPessoa]=useState([])
     console.log(pessoa,'o que pessoa apresenta')
@@ -100,6 +101,22 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
 
    useEffect(()=>{},[levar])
    
+   const [total,setTotal]=useState()
+   console.log ('a soma do valor total',total)
+   
+   const somaHoras =async()=>{
+        
+        try {
+            
+                Axios.get("http://localhost:3050/somaTempo") .then(
+                (response)=>{ setTotal(response.data)}
+            )
+        
+        } catch (error){
+            console.log(error)
+        }
+   }
+   useEffect(()=>{somaHoras()},[pessoa])
    //const [controlarabrirPesquisar,setControlarabrirPesquisar]=useState(false)
    //const [casseteSelecionado,setCasseteSelecionado]=useState()
    //const abrirPesquisa = (e)=>{
@@ -183,6 +200,18 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
                    
                    
                 </tbody>
+
+                {typeof total !="undefined" &&  
+                 <tfoot>
+                    
+                    <tr className='Total-time'>
+                     <td><strong>Tempo Total de Gravacao</strong></td>
+                     <td> --{total[0].tempototal} </td>
+                    </tr>
+                    
+                 </tfoot>
+                 }
+
             </table>
         </div>
         <br/>

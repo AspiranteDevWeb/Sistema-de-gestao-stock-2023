@@ -95,6 +95,7 @@ console.log(va,'alterar variavel receber')
                             placeholder='Alterar o tempo'
                             name='duracao'
                             defaultValue={pessoaSeleccionada.tempo}
+                            step="2"
                             onChange={Presente}
                        ></input>
 

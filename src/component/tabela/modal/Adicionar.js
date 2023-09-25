@@ -92,7 +92,8 @@ console.log(adiciona,'quero agora')
                        <label>Tempo/ Horas</label>
                        <input
                              type='time' 
-                             name='duracao' 
+                             name='duracao'
+                             step="2" 
                              onChange={e=>handlechangevalue({duracao:e.target.value})}
                         />
 
