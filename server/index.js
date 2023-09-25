@@ -4,7 +4,25 @@ const mysql=require("mysql2")
 const cors = require ("cors")
 
 
-const db= mysql.createPool({
+/**
+ * const tempo = require('./bd_time_calculator')
+ *      ou
+ * const {SomarTempo} = require ('./bd_time_calculator')
+ * 
+ * const soma = new SomarTempo("16:23")
+ * console.log(SomarTempo.somartempos())
+ */
+
+/**
+ * const db= mysql.createPool({
+    host:"localhost",
+    user:"root",
+    password:"",
+    database: "bd_sistema_gestao_2023",
+});
+ */
+
+const db= mysql.createConnection({
     host:"localhost",
     user:"root",
     password:"",
@@ -52,14 +70,14 @@ app.post ("/EnviarDadoNovosArmazem", (req, res)=>{
 
  app.get("/tudo/",(req,res)=>{
     let SQL =
-    "select armazem.idarmazem,armazem.armazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.data_emissao,produto.produto_observacao from armazem inner join produto where armazem.idarmazem = produto.armazem_idarmazem;"
+    "select armazem.idarmazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.data_emissao,produto.produto_observacao from armazem inner join produto where armazem.idarmazem = produto.armazem_idarmazem;"
          db.query( SQL, (err,result)=>{
             if (err) console.log(err);
             else res.status(200).json(result);
          });
        
  })
-
+//tirei ,armazem.armazem dos select
  app.get("/tudo/:levar", (req,res)=>{
     const {levar}= req.params;
     console.log(levar, "show samething")
@@ -67,7 +85,7 @@ app.post ("/EnviarDadoNovosArmazem", (req, res)=>{
 
         let SQL=
 
-        "select armazem.idarmazem,armazem.armazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.data_emissao,produto.produto_observacao from armazem inner join produto where armazem.idarmazem = produto.armazem_idarmazem;"
+        "select armazem.idarmazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.data_emissao,produto.produto_observacao from armazem inner join produto where armazem.idarmazem = produto.armazem_idarmazem;"
          db.query( SQL, (err,result)=>{
             if (err) console.log(err);
             else res.status(200).json(result);
@@ -77,7 +95,7 @@ app.post ("/EnviarDadoNovosArmazem", (req, res)=>{
    else{
         let SQL =
 
-        "select armazem.idarmazem,armazem.armazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.data_emissao,produto.produto_observacao from armazem join produto on armazem.idarmazem = produto.armazem_idarmazem  WHERE produto.produto_nome like ?;"
+        "select armazem.idarmazem,armazem.sala,armazem.gaveta,armazem.pratileira,armazem.corredor,produto.produto_nome,produto.produto_formato,produto.tempo,produto.data_emissao,produto.produto_observacao from armazem join produto on armazem.idarmazem = produto.armazem_idarmazem  WHERE produto.produto_nome like ?;"
 
         db.query(SQL,[`%${levar}%`]  ,(err,result)=>{
             if(err)console.log(err)
@@ -311,4 +329,29 @@ app.post ("/dados_usuario_online",(req,res)=>{
     })
 })
 
+
+// soma da hora
+
+
+app.get ("/somaTempo",(req,res)=>{
+    try{
+        let SQL= "SELECT sum(tempo) as tempototal from produto ";
+        //let SQL = "SELECT sum(tempo - cast('0:0:0' as tempototal))"; //as time
+
+        db.query(SQL,(err,result)=>{
+            if(err)console.log(err)
+            //else res.status(200).json(result,'apresentando a soma total....');//json.stringify(result)//JSON.parse(result)
+            //else res.status(200).send({tempototal:result}) ou ....send(String(result)) ou ....send((result).toString())
+            else res.end(JSON.stringify(result,'aaaaaaaaaa...'))
+            //json({result},'apresentando a soma.....')
+            //else res.status(200).json(Number(result))
+            //else res.status(200).send(result)
+            console.log(result);
+        })
+
+    }catch(err){
+        console.log("falha na soma do tempo");
+        return res.json({ok: 'soma tempo nao deu certo'});
+    }
+})
 
