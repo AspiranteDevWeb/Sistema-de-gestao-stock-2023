@@ -24,7 +24,7 @@ export default function Navibar_Geral(){
                                 
                                 <li className="itens"><Link to="/Home">Home</Link></li>
                                 <li className="itens"><Link to ="/"> Tabela Cassete  </Link></li>
-                                <li className="itens"><Link to ="/Signup"> Signup </Link></li>
+                                
                            </ul>
                            <div></div>
                 </div>
@@ -33,3 +33,6 @@ export default function Navibar_Geral(){
         </>
     )
 }
+/**
+ * <li className="itens"><Link to ="/Signup"> Signup </Link></li>
+ */
