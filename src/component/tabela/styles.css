@@ -98,14 +98,14 @@ butoes{
 
 }
 .butoes-add:hover{
-    background-color:  antiquewhite;
+    background-color:  rgb(58, 227, 28);
     transform: scale(1.1);
 }
 
 .butoes-act{
     cursor: pointer;
     margin-right: 5%;
-    background-color: rgba(15, 15, 244, 0.928);
+    background-color: rgba(105, 204, 222, 0.928);
     animation: ease-in;
     
 }
