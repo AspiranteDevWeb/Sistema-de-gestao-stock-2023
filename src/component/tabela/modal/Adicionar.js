@@ -1,12 +1,15 @@
 import React ,{useState}from 'react'
 import  Axios  from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css'
 import './styleAdd.css'
 
 
 function Adicionar({enviar_Informacao_Adicionar,setEstado}) {
 
-    const [valor,setValor]=useState()
-
+    const [valor,setValor]=useState();
+    const [error,setError]=useState();
    /**
     *  const future =(value)=>{
         setValor=(prevValue=>({
@@ -23,7 +26,7 @@ function Adicionar({enviar_Informacao_Adicionar,setEstado}) {
    //}
 
 
-    const [adiciona,setAdiciona]=useState()
+    const [adiciona,setAdiciona]=useState("")
 
 console.log(adiciona,'quero agora')
 //problema esta no handlechangevalue
@@ -35,31 +38,38 @@ console.log(adiciona,'quero agora')
     }
 
     const handleClickButton = (e)=>{
+        if (!adiciona.Titulo | !adiciona.data_de_emissao | !adiciona.sala){
+            //setError("Preencha todos os campos");
+            toast("Preencha todos os campos !");
+            return;
+        }else{
+                Axios.post ("http://localhost:3050/EnviarDadoNovosArmazem",{
+                    //idarmazem:adiciona.numero,
+                    sala:adiciona.sala,
+                    gaveta:adiciona.gaveta,
+                    pratileira:adiciona.pratileira,
+                    corredor:adiciona.corredor,
+                
+
+                }).then((response)=>{
+                    console.log(response,'dados frescos')
+                })
+
+                Axios.post ("http://localhost:3050/EnviarDadoNovosProduto",{
+                // armazem_idarmazem:adiciona.numero,
+                    produto_nome:adiciona.Titulo,
+                    produto_formato:valor,
+                    data_emissao:adiciona.data_de_emissao,
+                    duracao:adiciona.duracao,
+                    produto_observacao:adiciona.observacao,
+
+                }).then((response)=>{
+                    console.log(response,'dados frescos')
+                })
+
+                enviar_Informacao_Adicionar()
+            }
         
-        Axios.post ("http://localhost:3050/EnviarDadoNovosArmazem",{
-            //idarmazem:adiciona.numero,
-            sala:adiciona.sala,
-            gaveta:adiciona.gaveta,
-            pratileira:adiciona.pratileira,
-            corredor:adiciona.corredor,
-           
-
-        }).then((response)=>{
-            console.log(response,'dados frescos')
-        })
-
-        Axios.post ("http://localhost:3050/EnviarDadoNovosProduto",{
-           // armazem_idarmazem:adiciona.numero,
-            produto_nome:adiciona.Titulo,
-            produto_formato:valor,
-            data_emissao:adiciona.data_de_emissao,
-            duracao:adiciona.duracao,
-            produto_observacao:adiciona.observacao,
-
-        }).then((response)=>{
-            console.log(response,'dados frescos')
-        })
-        enviar_Informacao_Adicionar()
         //setEstado(false)
         //e.preventDefault()
     }//adiciona.data_de_emissao
@@ -78,7 +88,7 @@ console.log(adiciona,'quero agora')
                              placeholder='Digite o Titulo da cassete' 
                              name='Titulo'
                              onChange={e=>handlechangevalue({Titulo: e.target.value})}
-                             required
+                             
                         />
 
                        <label>Data Emisao</label>
@@ -87,7 +97,7 @@ console.log(adiciona,'quero agora')
                              placeholder='Digite a Data da Emissao' 
                              name='data_de_emissao' 
                              onChange={e=>handlechangevalue({data_de_emissao:e.target.value})}
-                             required
+                             
                              />
                        <label>Tempo/ Horas</label>
                        <input
@@ -99,6 +109,7 @@ console.log(adiciona,'quero agora')
 
                        <label>Formato</label>
                        <select  onChange={(e)=>setValor(e.target.value)}>
+                            <option>Seleciona formato</option>
                             <option name="Betacam" value="Betacam">Betacam</option>
                             <option name="UMatic" value="Matic">UMatic</option>
                             <option name="DVCAM" value="DVCAM">DVCAM</option>
@@ -112,7 +123,7 @@ console.log(adiciona,'quero agora')
                              name='sala' 
                              placeholder='digite a sala' 
                              onChange={e=>handlechangevalue({sala:e.target.value})}
-                             required
+                             
                         />
 
                        <label>Gaveta</label>
@@ -145,8 +156,10 @@ console.log(adiciona,'quero agora')
                             name='observacao' 
                             placeholder='digite a sua observacao' 
                             onChange={e=>handlechangevalue({observacao:e.target.value})}
-                            required
+                            
                         />
+
+                        <ToastContainer/>
 
                        <button
                              className='concluir-form' 
