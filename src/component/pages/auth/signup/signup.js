@@ -95,7 +95,7 @@ function Signup(){
        
         <div className='div_secundaria_signin'>
           <button onClick={(e)=>setAbrir(!abrir)}>usuarios Registados</button>
-        <h1><label>Sistema de login</label></h1>
+        <h1><label>Registo de usuario</label></h1>
 
           <Input
             type="name"
@@ -128,6 +128,7 @@ function Signup(){
 
           <label>Tipo de usuario</label>
           <select onChange={""}>
+            <option>Tipo usuario</option>
             <option name ="Assistente" value = "Assistente">Assistente</option>
             <option name ="Supervisor" value="Supervisor">Supervisor</option>
             <option name ="Administrador" value="Administrador">Administrador</option>
