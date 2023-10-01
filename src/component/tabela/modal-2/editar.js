@@ -28,30 +28,37 @@ console.log(va,'alterar variavel receber')
     }
     */console.log(pessoaSeleccionada, 'id do armazem para alterar')
 
+    //const [error,setError]=useState('')
+
     const handleUpdateValue = () =>{
        
-        Axios.put("http://localhost:3050/Actualizar_dados_Produto",{
+        try{
+
+            Axios.put("http://localhost:3050/Actualizar_dados_Produto",{
             armazem_idarmazem:pessoaSeleccionada.idarmazem,
-            produto_nome:va.titulo,
+            produto_nome:va.titulo?va.titulo:pessoaSeleccionada.produto_nome,
             produto_formato:formato,
             data_emissao:va.data_de_emissao,
            // tempo:va.tempo,
             tempo:va.duracao,
             produto_observacao:va.observacao,
-        }).then((response)=>{
-            console.log(response,'hum..hum..hum...ja avisei')
-        })
+            }).then((response)=>{
+                console.log(response,'hum..hum..hum...ja avisei')
+            })
 
-        Axios.put("http://localhost:3050/Actualizar_dados_Armazem",{
-            idarmazem:pessoaSeleccionada.idarmazem,
-            sala:va.sala,
-            gaveta:va.gaveta,
-            pratileira:va.pratileira,
-            corredor:va.corredor,
-        }).then ((response)=>{
-            console.log(response,'cuidados...ja comecou actualizacao')
-            
-        })
+            Axios.put("http://localhost:3050/Actualizar_dados_Armazem",{
+                idarmazem:pessoaSeleccionada.idarmazem,
+                sala:va.sala,
+                gaveta:va.gaveta,
+                pratileira:va.pratileira,
+                corredor:va.corredor,
+            }).then ((response)=>{
+                console.log(response,'cuidados...ja comecou actualizacao')
+                
+            })
+        } catch (error){
+            console.log(error)
+        }
 
 
 
