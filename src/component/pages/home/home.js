@@ -7,6 +7,10 @@ import Button from "../auth/components/button/index"
 import useAuth from '../auth/components/hooks/useAuth';
 import Navibar_Geral from '../auth/components/cabecalho/navBar_Geral';
 import { AuthProvider } from '../auth/components/contexts/auth';
+
+import Signup from '../auth/signup/signup';
+
+
 function Home (){
 
     const {signout}= useAuth()
@@ -14,8 +18,8 @@ function Home (){
     return(
         <>
         <Navibar_Geral/>
-        <div>Home</div>
-        <div><h1>Tem ALguma ideia?....</h1></div>
+        
+        <Signup/>
         <Button
             Text = "Sair"
             onClick={()=>[signout(), navigate("/Signin")]}
