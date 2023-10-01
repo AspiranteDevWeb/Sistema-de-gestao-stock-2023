@@ -206,7 +206,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
                     
                     <tr className='Total-time'>
                      <td><strong>Tempo Total de Gravacao</strong></td>
-                     <td> --{total[0].tempototal} </td>
+                     <td> {total[0].tempototal} </td>
                     </tr>
                     
                  </tfoot>
