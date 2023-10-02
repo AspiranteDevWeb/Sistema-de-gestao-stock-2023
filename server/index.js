@@ -147,14 +147,15 @@ app.get ("/recebe_signup/:buscarNome",(req,res)=>{
 
 /////
 app.post ("/signup", (req, res)=>{
-    
+    const {nome}=req.body;
     const {email}= req.body;
     const {senha1}= req.body;
     const {senha2}= req.body;
+    const funcao =req.body.tipo;
 
     let SQL=
-    "INSERT INTO usuario ( email, senha1, senha2) VALUES (?,?,?)";
-    db.query( SQL, [ email, senha1, senha2], (err, result) =>{
+    "INSERT INTO usuario ( nome, email, senha1, senha2,funcao) VALUES (?,?,?,?,?)";
+    db.query( SQL, [ nome,email, senha1, senha2,funcao], (err, result) =>{
         console.log(err);
     });
 }); 
@@ -336,7 +337,7 @@ app.post ("/dados_usuario_online",(req,res)=>{
 app.get ("/somaTempo",(req,res)=>{
     try{
         let SQL= "SELECT sum(tempo) as tempototal from produto ";
-        //let SQL = "SELECT sum(tempo - cast('0:0:0' as tempototal)) from produto"; //as time
+        //let SQL = "SELECT sum(tempo - cast('0:0:0' as tempototal)) from produto"; //as time=> nao funciona
 
         db.query(SQL,(err,result)=>{
             if(err)console.log(err)
