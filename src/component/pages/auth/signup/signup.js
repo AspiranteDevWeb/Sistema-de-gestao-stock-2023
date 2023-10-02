@@ -14,6 +14,7 @@ function Signup(){
   const [senha2, setSenha2]=useState();
   const [nome,setNome]=useState();
   const [error, setError]=useState();
+  const [tipo, setTipo]=useState()
   const [user, setUser]= useState();
   
   
@@ -52,6 +53,15 @@ function Signup(){
   },[])
   */
 
+  
+  const funcao_Usuario=(e)=>{
+    setTipo(prevValue=>({
+      ...prevValue,
+      [e.target.name]:e.target.value
+    }))
+  }
+
+
   const [abrir,setAbrir]=useState(false)
 
   const handleSignup = ()=> {
@@ -65,7 +75,7 @@ function Signup(){
     }
 
 
-   const res = signup(email,senha1)
+   const res = signup(nome, email, senha1, tipo)
 
    if(res){
     setError(res)
@@ -130,7 +140,7 @@ function Signup(){
           <br/>
 
           <label>Tipo de usuario</label>
-          <select onChange={""}>
+          <select onChange={funcao_Usuario}>
             <option>Tipo usuario</option>
             <option name ="Assistente" value = "Assistente">Assistente</option>
             <option name ="Supervisor" value="Supervisor">Supervisor</option>
