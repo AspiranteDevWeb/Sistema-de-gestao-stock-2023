@@ -69,10 +69,23 @@ export const AuthProvider = ({children})=>{
         })
     }
     
+    //novo metodo ---- ainda nao actualizado
+    const novoCadastro = (nome,email,senha1,tipo) =>{
+        axios.post ("http://localhost:3050/signup",{
+            nome:nome,
+            email:email,
+            senha1:senha1,
+            senha2:senha1,
+            tipo:tipo,
+        }).then((response)=>{
+            console.log(response,'registo de novo usuario')
+        })
+    }
+
 
     const [usersStorage,setUsersStorage]=useState()
 
-    const signup = (email,senha1)=>{
+    const signup = (nome,email,senha1,tipo)=>{
 
         setUsersStorage(user)
         //const usersStorage = JSON.parse(localStorage.getItem("users_db"))
@@ -81,6 +94,8 @@ export const AuthProvider = ({children})=>{
 
         if (hasUser?.length){
             return "Ja tem uma conta com essa senha"
+        }else{
+            novoCadastro(nome,email,senha1,tipo)
         }
         return;
     }
