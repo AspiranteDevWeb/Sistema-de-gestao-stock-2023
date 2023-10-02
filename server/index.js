@@ -336,7 +336,7 @@ app.post ("/dados_usuario_online",(req,res)=>{
 app.get ("/somaTempo",(req,res)=>{
     try{
         let SQL= "SELECT sum(tempo) as tempototal from produto ";
-        //let SQL = "SELECT sum(tempo - cast('0:0:0' as tempototal))"; //as time
+        //let SQL = "SELECT sum(tempo - cast('0:0:0' as tempototal)) from produto"; //as time
 
         db.query(SQL,(err,result)=>{
             if(err)console.log(err)
