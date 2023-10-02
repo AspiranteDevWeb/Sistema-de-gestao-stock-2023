@@ -12,6 +12,7 @@ function Signup(){
   const [email, setEmail]=useState();
   const [senha1, setSenha1]=useState();
   const [senha2, setSenha2]=useState();
+  const [nome,setNome]=useState();
   const [error, setError]=useState();
   const [user, setUser]= useState();
   
@@ -54,7 +55,7 @@ function Signup(){
   const [abrir,setAbrir]=useState(false)
 
   const handleSignup = ()=> {
-    if(!email | !senha1 | !senha2) {
+    if(!nome | !email | !senha1 | !senha2) {
       setError ("preencha todos os campos");
       return;
     }else 
@@ -62,17 +63,7 @@ function Signup(){
       setError("Os e-mails nao sao iguais");
       return;
     }
-//esse axios nao devia estar aqui
-    Axios.post("http://localhost:3050/signup",{
-     
-      email: email,
-      senha1: senha1,
-      senha2: senha2
-      
-    }).then((response)=> {
-      console.log(response);
-    }); 
-    
+
 
    const res = signup(email,senha1)
 
@@ -81,6 +72,18 @@ function Signup(){
     return;
    }
 
+   //esse axios nao devia estar aqui
+   Axios.post("http://localhost:3050/signup",{
+
+   nome:nome,
+   email: email,
+   senha1: senha1,
+   senha2: senha2
+   
+    }).then((response)=> {
+      console.log(response);
+    }); 
+ 
     alert("usario cadastrado com sucesso!!! Parabens");
     navigate("/home")
   };
@@ -100,8 +103,8 @@ function Signup(){
           <Input
             type="name"
             placeholder="DIgite o nome"
-            value={email}
-           // onChange={(e)=> [setEmail(e.target.value), setError("")]}
+            value={nome}
+            onChange={(e)=> [setNome(e.target.value), setError("")]}
           />
 
           <Input
