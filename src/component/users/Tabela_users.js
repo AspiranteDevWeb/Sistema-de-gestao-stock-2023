@@ -6,21 +6,30 @@ function Tabela_users({setAbrir}) {
     const [usuarios,setUsuarios]=useState();
     const [buscarNome,setBuscarNome]=useState()
 //recebe_signup<= correspond a =>usuarios
-    const dadadada = async ()=>{
-        const response =await (
-            Axios.get(`http://localhost:3050/recebe_signup/${buscarNome}`)
-        )
-        response(
-            (response)=>{
-                setUsuarios(response.data)}
+
+    console.log(usuarios, 'carregando lista de usuarios')
+
+    const dadadada = ()=>{
         
-        )
+        try{
+
+        
+                Axios.get(`http://localhost:3050/recebe_signup/${buscarNome}`)
+            
+            .then(
+                (response)=>{
+                    setUsuarios(response.data)}
+            
+            )
+        } catch (error){
+            console.log(error)
+        }
  
     }
 
     useEffect (()=>{
         dadadada()
-    },[usuarios])
+    },[buscarNome])
 
   return (
     <>
@@ -45,9 +54,9 @@ function Tabela_users({setAbrir}) {
                         {usuarios?.map((users,i)=>
                             <tr key={i}>
                                 <td>{i+1}</td>
-                                <td>{usuarios.Nome}</td>
-                                <td>{usuarios.Email}</td>
-                                <td>{usuarios.Funcao}</td>
+                                <td>{usuarios.nome}</td>
+                                <td>{usuarios.email}</td>
+                                <td>{usuarios.funcao}</td>
                             </tr>
                         )}
                     </tbody>
