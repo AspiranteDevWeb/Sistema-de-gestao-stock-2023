@@ -5,6 +5,7 @@ import './styles.css'
 import  Axios  from 'axios'
 import Apagador from "./modal-3/apagador"
 import Navibar_Geral from '../pages/auth/components/cabecalho/navBar_Geral'
+import UseAuth from '../pages/auth/components/hooks/useAuth'
 //import Search_box from './search/pesquisa'
 
 //import '../'
@@ -24,9 +25,12 @@ const Tabela = () => {
         setNovoEstado(dado_boolean)
     }
 
-   useEffect(()=>{
+   /**
+    * useEffect(()=>{
     
    },[pessoa])
+    */
+   
     //const [escopoPessoa,setEscopoPessoa]=useState({})
 const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
     console.log(pessoaSeleccionada,'testando edit env')
@@ -133,6 +137,8 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
     setNovoEstado(false)
    }
 
+   const {online_usuarios} = UseAuth()
+
   return (
     <div className='fundo_pagina_tabela'>
     <Navibar_Geral/>
@@ -165,7 +171,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
                     <th>Corredor</th>
                     <th>Observacao</th>
                     <th>Editar</th>
-                    <th>Excluir</th>
+                    {online_usuarios === "lamp@gmail.com" && <th>Excluir</th>}
                    </tr>
                 </thead>
                 <tbody>
@@ -193,7 +199,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
                         <button className='butoes-act' key={i} onClick={() =>handleClickAlterar(dado)}>Alterar</button>
                     </td>
                     <td>
-                        <button className='butoes-remov' key={i} onClick={()=>apagartudo(dado)} >Eliminar</button>
+                       {online_usuarios === "lamp@gmail.com" && <button className='butoes-remov' key={i} onClick={()=>apagartudo(dado)} >Eliminar</button>}
                     </td>
                    </tr>
                 ))}
