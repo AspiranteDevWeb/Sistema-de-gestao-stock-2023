@@ -111,12 +111,29 @@ app.post ("/Enviar_login", (req, res)=>{
     const {nome}= req.body;
     const email= req.body.email;
 
-    let SQL=
-    "INSERT INTO usuario (nome, email) VALUES (?,?)";
-    db.query( SQL, [nome, email], (err, result) =>{
-        console.log(err);
-    });
+    try {
+        let SQL=
+        "INSERT INTO usuario (nome, email) VALUES (?,?)";
+        db.query( SQL, [nome, email], (err, result) =>{
+            console.log(err);
+        });
+    }catch (err){
+        console.log(" falha oa inserir dados do usuario")
+    }
 }); 
+
+
+//recebe usuario que esta online (alterado 16:11 07/10-/2023)
+
+app.get("/buscar_usuario_id",(req,res)=>{
+    let SQL="SELECT * FROM usuario_online;"
+
+    db.query(SQL, (err,result)=>{
+        if (err)console.log(err);
+        else res.status(200).json(result)
+    });
+})
+
 
 //recebe_signup corresponde a usuarios
 app.get("/recebe_signup", (req,res)=>{
@@ -153,11 +170,16 @@ app.post ("/signup", (req, res)=>{
     const {senha2}= req.body;
     const funcao =req.body.tipo;
 
-    let SQL=
-    "INSERT INTO usuario ( nome, email, senha1, senha2,funcao) VALUES (?,?,?,?,?)";
-    db.query( SQL, [ nome,email, senha1, senha2,funcao], (err, result) =>{
-        console.log(err);
-    });
+    try {
+        let SQL=
+        "INSERT INTO usuario ( nome, email, senha1, senha2,funcao) VALUES (?,?,?,?,?)";
+        db.query( SQL, [ nome,email, senha1, senha2,funcao], (err, result) =>{
+            console.log(err);
+        });
+    }catch (err){
+        console.log('falha ao inserir dados do usuario no bd')
+    }
+
 }); 
 
 
@@ -185,7 +207,26 @@ app.delete("/delete_produto/:id",(req,res)=>{
    // let SQL = "delete produto,armazem from armazem join produto on armazem.idarmazem = produto.armazem_idarmazem where idarmazem = 5"
 //})
 
+//updating user password
 
+app.put ("/updating_usuario",(res,req)=>{
+    const {id}=req.body;
+    const {actual_password}=req.body;
+
+    if (id){
+
+        let SQL="UPDATE usuario SET senha1=?, senha2=? WHERE id=?;"
+
+        db.query(SQL,[actual_password,actual_password,id],(err,result)=>{
+            if(err) console.log(err, "Error on request userLogin by ID")
+            else console.log(result,'user data from usuario table')
+        })
+    }
+    
+})
+
+
+//updating produto
 
 app.put ("/Actualizar_dados_Produto",(req,res)=>{
 
@@ -313,21 +354,33 @@ app.put ("/Actualizar_dados_Armazem",(req,res)=>{
 
 app.post ("/dados_usuario_online",(req,res)=>{
 
-    const {nome} =req.body;
+    
+    
+    try{
+
+        const nome =req.body.namePessoa;
     const {email} =req.body;
     const data_inicio=req.body.data_inicio;
     const hora_inicio=req.body.hora_inicio;
-    /**essa condicionais  */
-    if(!email){
-        //return res.status(422).json({msg:'o email do usuario logado nao chegou'})
-        console.log('o email do usuario logado nao chegou')
-    }
+    const {token}=req.body;
 
-    let SQL = "INSERT INTO usuario_online (nome, email,data_inicio,hora_inicio) values (?,?,?,?)";
-    db.query( SQL, [ nome, email, data_inicio, hora_inicio], (err, result) =>{
-        if (err) console.log(err,'falha....nao conseguio inserir dados pra usuario online....');
-        else console.log(result,'insercao de dados usuario logado');
-    })
+        /**essa condicionais  */
+        if(!nome | !email | ! token){
+            //return res.status(422).json({msg:'o email do usuario logado nao chegou'})
+            console.log('o email ou token do usuario logado nao chegou na API')
+        }else {
+
+            let SQL = "INSERT INTO usuario_online (nome, email,data_inicio,hora_inicio,token) values (?,?,?,?,?)";
+            db.query( SQL, [ nome, email, data_inicio, hora_inicio,token], (err, result) =>{
+                if (err) console.log(err,'falha....nao conseguio inserir dados pra usuario online....');
+                else console.log(result,'insercao de dados usuario logado');
+            })
+        }
+
+        
+    } catch(err){
+        console.log('nao esta ser possivel enviar os dados do usuario online para bd')
+    }
 })
 
 
@@ -336,8 +389,12 @@ app.post ("/dados_usuario_online",(req,res)=>{
 
 app.get ("/somaTempo",(req,res)=>{
     try{
-        let SQL= "SELECT sum(tempo) as tempototal from produto ";
+        let SQL= "select sec_to_time(sum(time_to_sec(tempo))) as tempototal from produto ";
+        //03.10.2023===> mudei script de soma 
         //let SQL = "SELECT sum(tempo - cast('0:0:0' as tempototal)) from produto"; //as time=> nao funciona
+        //SELECT sum(tempo) as tempototal from produto====> faz a soma total dos valores
+
+
 
         db.query(SQL,(err,result)=>{
             if(err)console.log(err)
@@ -356,3 +413,29 @@ app.get ("/somaTempo",(req,res)=>{
     }
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//elimina grupo
+// Script para eliminar varios itens de uma so vez na tabela
+//SQL="delete from usuario where id between 1 and 165;"
+
+
+//busca de forma ordenada
+//select * from usuario_online order by id ASC ;

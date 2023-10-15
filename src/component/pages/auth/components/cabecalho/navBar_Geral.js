@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom'
 import './navBar_Geral.css'
 
 export default function Navibar_Geral(){
+
+    const Privado = ({Componente})=>{
+        const permicao = 1;
+        return permicao > 0 ? <Componente/> : <div></div>
+    }
     return(
         <>
             <nav className="Cabecalho_geral">

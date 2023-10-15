@@ -1,8 +1,13 @@
 import React,{useState} from 'react'
-import { Input } from '../components/input/stylesInput'
-import Button from '../components/button'
+import  Input  from '../components/input/input'
+import Button from '../components/button/index'
+import useAuth from '../components/hooks/useAuth'
 
-const Signun_change=()=>{
+export default function Signun_change(){
+
+    
+
+    const {signin_change_pass}=useAuth
 
     const [valor,setValor]=useState()
 
@@ -13,17 +18,22 @@ const Signun_change=()=>{
         })
             
         )
+
+        
     }
 
-    const handleChangePass=(user)=>{
-        const filtrar_usuario=(user)=>{user.filter(user.email===valor.email && user.password===valor.actual_password)}
-        if(!filtrar_usuario){
-            for (let u=0; u<user.lenght;u++){
-                if(user[u].email===valor.email)
-            }
+    const handleChangePass=()=>{
+       // const usertoken=Math.random().toString(36).substring(2)
+
+        if(!valor.email | !valor.actual_password | !valor.nova_pass){
+            console.log("")
+            return;
+        }else {
+            signin_change_pass(valor)
         }
+        
     }
-    
+
     return (
         <div className='div_geral_signin'>
            

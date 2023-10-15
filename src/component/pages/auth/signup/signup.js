@@ -55,10 +55,7 @@ function Signup(){
 
   
   const funcao_Usuario=(e)=>{
-    setTipo(prevValue=>({
-      ...prevValue,
-      [e.target.name]:e.target.value
-    }))
+    setTipo(e.target.value)
   }
 
 
@@ -83,19 +80,21 @@ function Signup(){
    }
 
    //esse axios nao devia estar aqui
-   Axios.post("http://localhost:3050/signup",{
+   /**
+    * Axios.post("http://localhost:3050/signup",{
 
-   nome:nome,
-   email: email,
-   senha1: senha1,
-   senha2: senha2
-   
-    }).then((response)=> {
-      console.log(response);
-    }); 
+      nome:nome,
+      email: email,
+      senha1: senha1,
+      senha2: senha2
+    
+      }).then((response)=> {
+        console.log(response);
+      }); 
+    */
  
     alert("usario cadastrado com sucesso!!! Parabens");
-    navigate("/home")
+    //navigate("/home")
   };
 
 
@@ -157,7 +156,7 @@ function Signup(){
           <labelSignin>
             ja tem uma conta?
             <strong>
-              <Link to="/Home">Entre</Link>
+              <Link to="/Signin">Entre</Link>
             </strong>
           </labelSignin>
 

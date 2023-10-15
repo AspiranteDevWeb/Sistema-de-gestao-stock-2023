@@ -16,18 +16,21 @@ function Signin(){
   const [email, setEmail]=useState('');
   const [senha, setSenha]=useState('');
   const [error, setError]=useState();
-  const [user, setUser]= useState();
+  //const [user, setUser]= useState();
   const [userOnline,setUserOnline]=useState()
 console.log(email,"email do usuario para login")
 console.log(senha,"senha do usuario para login")
-  useEffect(()=>{
-    axios.get("http://localhost:3050/recebe_signup").then((response)=>{
+ /**
+  * 
+  *  useEffect(()=>{
+      axios.get("http://localhost:3050/recebe_signup").then((response)=>{
+        
+      setUser(response.data)
       
-    setUser(response.data)
-    
-    })
-    
-  },[])
+      })
+      
+      },[user])
+  */
 
   const handlelogin =() => {
     if (!email | !senha){

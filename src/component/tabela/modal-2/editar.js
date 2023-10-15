@@ -111,7 +111,7 @@ console.log(va,'alterar variavel receber')
                        <select  onChange={(e)=>setFormato(e.target.value)}>
                             <option>Seleciona formato</option>
                             <option name="Betacam" value="Betacam">Betacam</option>
-                            <option name="UMatic" value="UMatic">UMatic</option>
+                            <option name="UMatic" value="U-Matic">U-Matic</option>
                             <option name="DVCAM" value="DVCAM">DVCAM</option>
                             <option name="VHS" value="VHS">VHS</option>
                             <option name="Minav" value="Minav">Minav</option>

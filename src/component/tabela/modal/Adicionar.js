@@ -111,7 +111,7 @@ console.log(adiciona,'quero agora')
                        <select  onChange={(e)=>setValor(e.target.value)}>
                             <option>Seleciona formato</option>
                             <option name="Betacam" value="Betacam">Betacam</option>
-                            <option name="UMatic" value="Matic">UMatic</option>
+                            <option name="UMatic" value="U-Matic">U-Matic</option>
                             <option name="DVCAM" value="DVCAM">DVCAM</option>
                             <option name="VHS" value="MHS">VHS</option>
                             <option name="Minav" value="Minav">Minav</option>
