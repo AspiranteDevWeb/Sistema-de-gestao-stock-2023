@@ -7,7 +7,7 @@ function Tabela_users({setAbrir}) {
     const [buscarNome,setBuscarNome]=useState()
 //recebe_signup<= correspond a =>usuarios
 
-    console.log(usuarios, 'carregando lista de usuarios')
+   // console.log(usuarios, 'carregando lista de usuarios')
 
     const dadadada = ()=>{
         

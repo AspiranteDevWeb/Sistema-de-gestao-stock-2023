@@ -31,14 +31,14 @@ export const AuthProvider = ({children})=>{
   
    
    const y = `${hora} : ${minutos} : ${segundos}`
-    console.log(hora,":", minutos,":",segundos)
-    console.log(hora_inicio)
+   // console.log(hora,":", minutos,":",segundos)
+    //console.log(hora_inicio)
 
-    console.log(data_actual)
-    console.log(dia ,"/",mes ,"/",ano)
-    console.log(online_usuarios,'o usario online')
+    //console.log(data_actual)
+    //console.log(dia ,"/",mes ,"/",ano)
+    //console.log(online_usuarios,'o usario online')
 
-    console.log(user,'a carregar a senha1')
+    //console.log(user,'a carregar a senha1')
 
     const [userOnline,setUserOnline]=useState()
     const[valortoken,setValortoken]=useState(0)
@@ -68,7 +68,7 @@ export const AuthProvider = ({children})=>{
        useEffect(()=>{
         data_time()
        },[])//ultima alteracao 03.10.23
-       console.log(data_time,'KKKKKKKas')
+       //console.log(data_time,'KKKKKKKas')
 
 
     
@@ -82,7 +82,7 @@ export const AuthProvider = ({children})=>{
             senha2:senha1,
             tipo:tipo,
         }).then((response)=>{
-            console.log(response,'registo de novo usuario')
+          //  console.log(response,'registo de novo usuario')
         })
     }
 
@@ -95,7 +95,7 @@ export const AuthProvider = ({children})=>{
         //const usersStorage = JSON.parse(localStorage.getItem("users_db"))
 
         const hasUser = usersStorage?.filter((user)=> user.senha1 === senha1 && user.email===email)
-        console.log(hasUser,"este E o valor do objecto que retorna ao chamar signup. Error... Ja existe usuario com essa conta")//new
+        //console.log(hasUser,"este E o valor do objecto que retorna ao chamar signup. Error... Ja existe usuario com essa conta")//new
         if (hasUser?.length){
             return "Ja tem uma conta com essa senha"
         }else{
@@ -106,10 +106,10 @@ export const AuthProvider = ({children})=>{
 
 
     function signin (email, senha){
-console.log(email,"lllll")
-console.log(senha,"22222")
+//console.log(email,"lllll")
+//console.log(senha,"22222")
         const hasUser = user?.filter((user) => user.senha1 === senha)
-        console.log(hasUser,"senha do usuario logado")
+        //console.log(hasUser,"senha do usuario logado")
         if(hasUser?.length){
             for (let n=0 ; n<hasUser?.length; n++){
                 
@@ -119,7 +119,7 @@ console.log(senha,"22222")
                    // setOnline_usuario({email:email, data_actual:data_actual, hora_inicio:hora_inicio, token:token});
                     handleUsuarioOnline(email, token,hasUser)
                     setEstado(1)
-                    console.log(hasUser[0])
+                 //   console.log(hasUser[0])
                     return;
                 }else {
                     return "Email ou senha incorrecta";
@@ -136,13 +136,13 @@ console.log(senha,"22222")
         
        // const novoRegisto = user?.filter((user)=>  user.email===email)
        const novoRegisto =hasUser?.filter((user)=>  user.email===email)
-       console.log(hasUser,'a receber por parametro o valor do filtro hasUser')
+      // console.log(hasUser,'a receber por parametro o valor do filtro hasUser')
         try{
             //const UsersStorages=user
             //const novoRegisto = UsersStorages?.filter((user)=>  user.email===email)
             //==urgent==const novoRegisto =hasUser?.filter((user)=>  user.email===email)
            // setNovoRegistos (hasUser?.filter((user)=>  user.email===email))
-           console.log(hasUser,'o valor do filtro hasUser')
+           //console.log(hasUser,'o valor do filtro hasUser')
             if(novoRegisto?.length ){
                // let nome=await novoRegisto.nome
                 setOnline_usuarios({nome:email, namePessoa:novoRegisto.nome,data_actual:data_actual, email:email, hora_inicio:hora_inicio, token:token});
@@ -151,7 +151,7 @@ console.log(senha,"22222")
                 //console.log(novoRegisto.nome,'tente aqui')
             }else{console.log('error.....euro..')}
         }catch(err){
-            console.log(err,'00ooooo0000000oooo000')
+            console.log(err,'oo000')
         }
     }
     
@@ -170,11 +170,13 @@ console.log(senha,"22222")
                 hora_inicio:await online_usuarios.hora_inicio,
                 token:await online_usuarios.token,
             }). then((response)=>{
-                console.log(response, 'dados do usuario que esta logado no sistema')
+                //console.log(response, 'dados do usuario que esta logado no sistema')
+                console.log('')
             })
             //console.log(nome,"o nome urgente kakaka.>...>..")
         } catch (err){
-            console.log(err,"nao foi desta vez...nao enviou dados usuario logado")
+           // console.log(err,"nao foi desta vez...nao enviou dados usuario logado")
+           console.log('')
         }
     }
 
@@ -198,7 +200,8 @@ console.log(senha,"22222")
             id:Id_user.idusuario,
             actual_password:pass.nova_pass,
         }).then((response)=>{
-                console.log(response,'envio de actualizacao de senha com sucesso')
+                //console.log(response,'envio de actualizacao de senha com sucesso')
+                console.log('envio de actualizacao de senha com sucesso')
             })
        } catch (err){
         console.log("nova pass")
@@ -211,7 +214,7 @@ console.log(senha,"22222")
         const filtrar_usuario=user.filter((user)=>user.email===valor.email && user.password===valor.actual_password)
         const pickuser=userOnline.filter((usuario)=> filtrar_usuario.email===usuario.email && valortoken===usuario.token)
         if(!pickuser || !filtrar_usuario){
-            console.log('usuario nao tem permissao para alterar senha')
+            console.log('usuario sem permissao ')
         }else{
             const pass=valor.nova_pass
             const Id_user=filtrar_usuario.id_usuario

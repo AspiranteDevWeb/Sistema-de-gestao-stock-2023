@@ -11,7 +11,7 @@ import UseAuth from '../pages/auth/components/hooks/useAuth'
 //import '../'
 const Tabela = () => {
     const [pessoa,setPessoa]=useState([])
-    console.log(pessoa,'o que pessoa apresenta')
+   // console.log(pessoa,'o que pessoa apresenta')
 
     const [estado,setEstado]=useState(false)
 
@@ -33,10 +33,10 @@ const Tabela = () => {
    
     //const [escopoPessoa,setEscopoPessoa]=useState({})
 const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
-    console.log(pessoaSeleccionada,'testando edit env')
+   // console.log(pessoaSeleccionada,'testando edit env')
       function handleClickAlterar(pessoa){
         //event.preventDefault()
-        console.log(pessoa, 've se recebe alguma coisa edi')
+       // console.log(pessoa, 've se recebe alguma coisa edi')
         setNovoEstado(!novoEstado)
         setPessoaSeleccionada(pessoa)
         //const novaPessoa=pessoa.find((valor)=>valor.id===id)
@@ -53,7 +53,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
 
      const apagartudo = (i)=>{
         //event.preventDefault()
-        console.log(i,'id para apagar...')
+       // console.log(i,'id para apagar...')
         
         setErase(!erase)
         setId(i)
@@ -77,7 +77,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
 
 
     const [levar,setLevar]=useState('')
-    console.log(levar, 'dados inseridos na searchbox/input')
+   // console.log(levar, 'dados inseridos na searchbox/input')
     
    
      const gaigai = async ()=>{
@@ -106,7 +106,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
    useEffect(()=>{},[levar])
    
    const [total,setTotal]=useState()
-   console.log ('a soma do valor total',total)
+  // console.log ('a soma do valor total',total)
    
    const somaHoras =async()=>{
         
@@ -171,7 +171,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
                     <th>Corredor</th>
                     <th>Observacao</th>
                     <th>Editar</th>
-                    {online_usuarios === "lamp@gmail.com" && <th>Excluir</th>}
+                    {online_usuarios === "lourenco.lampiao@gmail.com" && <th>Excluir</th>}
                    </tr>
                 </thead>
                 <tbody>
@@ -199,7 +199,7 @@ const [pessoaSeleccionada,setPessoaSeleccionada]=useState([])
                         <button className='butoes-act' key={i} onClick={() =>handleClickAlterar(dado)}>Alterar</button>
                     </td>
                     <td>
-                       {online_usuarios === "lamp@gmail.com" && <button className='butoes-remov' key={i} onClick={()=>apagartudo(dado)} >Eliminar</button>}
+                       {online_usuarios === "lourenco.lampiao@gmail.com" && <button className='butoes-remov' key={i} onClick={()=>apagartudo(dado)} >Eliminar</button>}
                     </td>
                    </tr>
                 ))}

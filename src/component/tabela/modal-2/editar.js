@@ -43,7 +43,8 @@ console.log(va,'alterar variavel receber')
             tempo:va.duracao,
             produto_observacao:va.observacao,
             }).then((response)=>{
-                console.log(response,'hum..hum..hum...ja avisei')
+                //console.log(response,'hum..hum..hum...ja avisei')
+                console.log('')
             })
 
             Axios.put("http://localhost:3050/Actualizar_dados_Armazem",{
@@ -53,8 +54,8 @@ console.log(va,'alterar variavel receber')
                 pratileira:va.pratileira,
                 corredor:va.corredor,
             }).then ((response)=>{
-                console.log(response,'cuidados...ja comecou actualizacao')
-                
+               // console.log(response,'cuidados...ja comecou actualizacao')
+               console.log('')
             })
         } catch (error){
             console.log(error)

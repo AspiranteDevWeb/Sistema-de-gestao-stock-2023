@@ -19,7 +19,7 @@ function Rotas() {
   const Priva=({Iten})=>{
     const {online_usuarios}= UseAuth()
     console.log (online_usuarios, 'rota Priva')
-    return online_usuarios === "lamp@gmail.com"?<Iten/>:<Tabela/>
+    return online_usuarios === "lourenco.lampiao@gmail.com"?<Iten/>:<Tabela/>
   }
  
   return (
